@@ -17,7 +17,7 @@ impl MouseCoords {
         }
     }
 
-    pub fn get_coords(&mut self) -> (i32, i32) {
+    pub fn query_pointer(&self) -> (i32, i32) {
         unsafe {
             let root;
             root = xlib::XDefaultRootWindow(self.display);
