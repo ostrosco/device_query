@@ -21,7 +21,6 @@ impl MouseCoords {
         unsafe {
             let root;
             root = xlib::XDefaultRootWindow(self.display);
-            let mouse_coords = (0.0, 0.0);
             let mut root_x = 0;
             let mut root_y = 0;
             let mut win_x = 0;
