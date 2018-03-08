@@ -1,4 +1,7 @@
 pub mod keymap;
+pub mod mouse_state;
+use keymap::Keycode;
+use mouse_state::MouseState;
 
 #[cfg(target_os = "linux")]
 pub mod linux;
@@ -11,17 +14,16 @@ pub mod windows;
 pub use windows::MouseCoords;
 
 pub trait MouseQuery {
-    fn get_coords(&self) -> (i32, i32);
-    fn get_keys(&self) -> ();
+    fn get_coords(&self) -> MouseState;
+    fn get_keys(&self) -> Vec<Keycode>;
 }
 
 impl MouseQuery for MouseCoords {
-    fn get_coords(&self) -> (i32, i32) {
+    fn get_coords(&self) -> MouseState {
         self.query_pointer()
     }
 
-    fn get_keys(&self) -> () {
-        self.query_keymap();
-        ()
+    fn get_keys(&self) -> Vec<Keycode> {
+        self.query_keymap()
     }
 }

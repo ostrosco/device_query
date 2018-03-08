@@ -4,6 +4,7 @@ use linux::x11::xlib;
 use linux::x11::keysym;
 use std::ptr;
 use keymap::Keycode;
+use mouse_state::MouseState;
 use std::slice;
 
 pub struct MouseCoords {
@@ -19,7 +20,7 @@ impl MouseCoords {
         }
     }
 
-    pub fn query_pointer(&self) -> (i32, i32) {
+    pub fn query_pointer(&self) -> MouseState {
         unsafe {
             let root;
             root = xlib::XDefaultRootWindow(self.display);
@@ -41,7 +42,20 @@ impl MouseCoords {
                 &mut win_y,
                 &mut mask_return,
             );
-            (win_x, win_y)
+            let button1pressed = mask_return & xlib::Button1Mask > 0;
+            let button2pressed = mask_return & xlib::Button2Mask > 0;
+            let button3pressed = mask_return & xlib::Button3Mask > 0;
+            let button4pressed = mask_return & xlib::Button4Mask > 0;
+            let button5pressed = mask_return & xlib::Button5Mask > 0;
+
+            // Use 1-based indexing here so people can just query the button
+            // number they're interested in directly.
+            let button_pressed = vec![false, button1pressed, button2pressed,
+                button3pressed, button4pressed, button5pressed];
+            MouseState {
+                coords: (win_x, win_y),
+                button_pressed: button_pressed,
+            }
         }
     }
 
