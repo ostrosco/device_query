@@ -1,5 +1,5 @@
 [package]
-name = "mouse_coords"
+name = "device_query"
 version = "0.1.0"
 authors = ["ostrosco <ostrosco@fastmail.fm>"]
 build = "build.rs"

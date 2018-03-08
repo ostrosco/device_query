@@ -7,16 +7,16 @@ use keymap::Keycode;
 use mouse_state::MouseState;
 use std::slice;
 
-pub struct MouseCoords {
+pub struct DeviceState {
     display: *mut xlib::Display,
 }
 
-impl MouseCoords {
-    pub fn new() -> MouseCoords {
+impl DeviceState {
+    pub fn new() -> DeviceState {
         unsafe {
             xlib::XInitThreads();
             let disp = xlib::XOpenDisplay(ptr::null());
-            MouseCoords { display: disp }
+            DeviceState { display: disp }
         }
     }
 

@@ -4,11 +4,11 @@ extern crate winapi;
 use windows::winapi::windef::POINT;
 use windows::user32::GetCursorPos;
 
-pub struct MouseCoords;
+pub struct DeviceState;
 
-impl MouseCoords {
-    pub fn new() -> MouseCoords {
-        MouseCoords {}
+impl DeviceState {
+    pub fn new() -> DeviceState {
+        DeviceState {}
     }
 
     pub fn query_pointer(&self) -> (i32, i32) {

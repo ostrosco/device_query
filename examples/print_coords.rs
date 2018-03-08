@@ -1,9 +1,9 @@
-extern crate mouse_coords;
+extern crate device_query;
 
-use mouse_coords::{MouseCoords, MouseQuery};
+use device_query::{DeviceState, DeviceQuery};
 
 fn main() {
-    let coords = MouseCoords::new();
+    let coords = DeviceState::new();
     loop {
         println!("{:?}", coords.get_coords());
         println!("{:?}", coords.get_keys());
