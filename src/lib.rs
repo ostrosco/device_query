@@ -1,7 +1,7 @@
 pub mod keymap;
 pub mod mouse_state;
-use keymap::Keycode;
-use mouse_state::MouseState;
+pub use keymap::Keycode;
+pub use mouse_state::MouseState;
 
 #[cfg(target_os = "linux")]
 pub mod linux;
