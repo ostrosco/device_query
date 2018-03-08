@@ -6,19 +6,19 @@ use mouse_state::MouseState;
 #[cfg(target_os = "linux")]
 pub mod linux;
 #[cfg(target_os = "linux")]
-pub use linux::MouseCoords;
+pub use linux::DeviceState;
 
 #[cfg(target_os = "windows")]
 pub mod windows;
 #[cfg(target_os = "windows")]
-pub use windows::MouseCoords;
+pub use windows::DeviceState;
 
-pub trait MouseQuery {
+pub trait DeviceQuery {
     fn get_coords(&self) -> MouseState;
     fn get_keys(&self) -> Vec<Keycode>;
 }
 
-impl MouseQuery for MouseCoords {
+impl DeviceQuery for DeviceState {
     fn get_coords(&self) -> MouseState {
         self.query_pointer()
     }
