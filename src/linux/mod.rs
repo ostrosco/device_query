@@ -94,9 +94,6 @@ impl DeviceState {
                 }
             }
             keycodes.dedup();
-            if keycodes.len() > 0 {
-                println!("keycodes: {:?}", keycodes);
-            }
             keycodes
         }
     }
