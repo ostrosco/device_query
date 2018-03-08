@@ -1,5 +1,5 @@
-extern crate winapi;
 extern crate user32;
+extern crate winapi;
 
 use windows::winapi::windef::POINT;
 use windows::user32::GetCursorPos;
@@ -13,7 +13,7 @@ impl MouseCoords {
 
     pub fn query_pointer(&self) -> (i32, i32) {
         unsafe {
-            let point = &mut POINT {x: 0, y: 0};
+            let point = &mut POINT { x: 0, y: 0 };
             if GetCursorPos(point) != 0 {
                 ((*point).x, (*point).y)
             } else {

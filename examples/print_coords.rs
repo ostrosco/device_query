@@ -6,5 +6,6 @@ fn main() {
     let coords = MouseCoords::new();
     loop {
         println!("{:?}", coords.get_coords());
+        println!("{:?}", coords.get_keys());
     }
 }
