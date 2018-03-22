@@ -1,6 +1,6 @@
 extern crate device_query;
 
-use device_query::{DeviceState, DeviceQuery};
+use device_query::{DeviceQuery, DeviceState};
 
 fn main() {
     let coords = DeviceState::new();

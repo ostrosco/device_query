@@ -50,8 +50,14 @@ impl DeviceState {
 
             // Use 1-based indexing here so people can just query the button
             // number they're interested in directly.
-            let button_pressed = vec![false, button1pressed, button2pressed,
-                button3pressed, button4pressed, button5pressed];
+            let button_pressed = vec![
+                false,
+                button1pressed,
+                button2pressed,
+                button3pressed,
+                button4pressed,
+                button5pressed,
+            ];
             MouseState {
                 coords: (win_x, win_y),
                 button_pressed: button_pressed,
