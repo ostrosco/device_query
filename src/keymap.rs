@@ -52,6 +52,8 @@ pub enum Keycode {
     Space,
     LControl,
     RControl,
+    LShift,
+    RShift,
     LAlt,
     RAlt,
     Enter,
