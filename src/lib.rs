@@ -1,3 +1,6 @@
+//! A simple library for querying mouse and keyboard state without requiring
+//! an active window. Currently works in Windows and Linux.
+
 pub mod keymap;
 pub mod mouse_state;
 pub use keymap::Keycode;
@@ -14,15 +17,17 @@ pub mod windows;
 pub use windows::DeviceState;
 
 pub trait DeviceQuery {
-    fn get_coords(&self) -> MouseState;
+    fn get_mouse(&self) -> MouseState;
     fn get_keys(&self) -> Vec<Keycode>;
 }
 
 impl DeviceQuery for DeviceState {
-    fn get_coords(&self) -> MouseState {
+    /// Query for the current mouse position and mouse button state.
+    fn get_mouse(&self) -> MouseState {
         self.query_pointer()
     }
 
+    /// Query for all keys that are currently pressed down.
     fn get_keys(&self) -> Vec<Keycode> {
         self.query_keymap()
     }
