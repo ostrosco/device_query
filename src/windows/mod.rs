@@ -66,10 +66,72 @@ impl DeviceState {
     }
 
     fn keycode_to_key(&self, keycode: i32) -> Option<Keycode> {
-        match keycode {
+        let mut key = match keycode {
+            winuser::VK_F1 => Some(Keycode::F1),
+            winuser::VK_F2 => Some(Keycode::F2),
+            winuser::VK_F3 => Some(Keycode::F3),
+            winuser::VK_F4 => Some(Keycode::F4),
+            winuser::VK_F5 => Some(Keycode::F5),
+            winuser::VK_F6 => Some(Keycode::F6),
+            winuser::VK_F7 => Some(Keycode::F7),
+            winuser::VK_F8 => Some(Keycode::F8),
+            winuser::VK_F9 => Some(Keycode::F9),
+            winuser::VK_F10 => Some(Keycode::F10),
+            winuser::VK_F11 => Some(Keycode::F11),
+            winuser::VK_F12 => Some(Keycode::F12),
             winuser::VK_SPACE => Some(Keycode::Space),
+            winuser::VK_LCONTROL => Some(Keycode::LControl),
+            winuser::VK_RCONTROL => Some(Keycode::RControl),
+            winuser::VK_LSHIFT => Some(Keycode::LShift),
+            winuser::VK_RSHIFT => Some(Keycode::RShift),
+            winuser::VK_LMENU => Some(Keycode::LAlt),
+            winuser::VK_RMENU => Some(Keycode::RAlt),
             winuser::VK_RETURN => Some(Keycode::Enter),
             _ => None,
+        };
+
+        if key.is_none() {
+            let keycode = keycode as u8;
+            key = match keycode as char {
+                '0' => Some(Keycode::Key0),
+                '1' => Some(Keycode::Key1),
+                '2' => Some(Keycode::Key2),
+                '3' => Some(Keycode::Key3),
+                '4' => Some(Keycode::Key4),
+                '5' => Some(Keycode::Key5),
+                '6' => Some(Keycode::Key6),
+                '7' => Some(Keycode::Key7),
+                '8' => Some(Keycode::Key8),
+                '9' => Some(Keycode::Key9),
+                'A' => Some(Keycode::A),
+                'B' => Some(Keycode::B),
+                'C' => Some(Keycode::C),
+                'D' => Some(Keycode::D),
+                'E' => Some(Keycode::E),
+                'F' => Some(Keycode::F),
+                'G' => Some(Keycode::G),
+                'H' => Some(Keycode::H),
+                'I' => Some(Keycode::I),
+                'J' => Some(Keycode::J),
+                'K' => Some(Keycode::K),
+                'L' => Some(Keycode::L),
+                'M' => Some(Keycode::M),
+                'N' => Some(Keycode::N),
+                'O' => Some(Keycode::O),
+                'P' => Some(Keycode::P),
+                'Q' => Some(Keycode::Q),
+                'R' => Some(Keycode::R),
+                'S' => Some(Keycode::S),
+                'T' => Some(Keycode::T),
+                'U' => Some(Keycode::U),
+                'V' => Some(Keycode::V),
+                'W' => Some(Keycode::W),
+                'X' => Some(Keycode::X),
+                'Y' => Some(Keycode::Y),
+                'Z' => Some(Keycode::Z),
+                _ => None,
+            }
         }
+        key
     }
 }
