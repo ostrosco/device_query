@@ -4,12 +4,12 @@ use device_query::{DeviceQuery, DeviceState, MouseState};
 
 fn main() {
     let device_state = DeviceState::new();
-    let mut prev_coords = MouseState {coords: (0, 0), button_pressed: vec![]};
+    let mut prev_mouse = MouseState {coords: (0, 0), button_pressed: vec![]};
     loop {
-        let coords = device_state.get_coords();
-        if coords != prev_coords {
-            println!("{:?}", coords);
+        let mouse = device_state.get_mouse();
+        if mouse != prev_mouse {
+            println!("{:?}", mouse);
         }
-        prev_coords = coords;
+        prev_mouse = mouse;
     }
 }

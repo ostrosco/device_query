@@ -21,16 +21,16 @@ impl DeviceState {
     }
 
     pub fn query_pointer(&self) -> MouseState {
+        let root;
+        let mut root_x = 0;
+        let mut root_y = 0;
+        let mut win_x = 0;
+        let mut win_y = 0;
+        let mut root_return = 0;
+        let mut child_return = 0;
+        let mut mask_return = 0;
         unsafe {
-            let root;
             root = xlib::XDefaultRootWindow(self.display);
-            let mut root_x = 0;
-            let mut root_y = 0;
-            let mut win_x = 0;
-            let mut win_y = 0;
-            let mut root_return = 0;
-            let mut child_return = 0;
-            let mut mask_return = 0;
             xlib::XQueryPointer(
                 self.display,
                 root,
@@ -42,33 +42,33 @@ impl DeviceState {
                 &mut win_y,
                 &mut mask_return,
             );
-            let button1pressed = mask_return & xlib::Button1Mask > 0;
-            let button2pressed = mask_return & xlib::Button2Mask > 0;
-            let button3pressed = mask_return & xlib::Button3Mask > 0;
-            let button4pressed = mask_return & xlib::Button4Mask > 0;
-            let button5pressed = mask_return & xlib::Button5Mask > 0;
+        }
+        let button1pressed = mask_return & xlib::Button1Mask > 0;
+        let button2pressed = mask_return & xlib::Button2Mask > 0;
+        let button3pressed = mask_return & xlib::Button3Mask > 0;
+        let button4pressed = mask_return & xlib::Button4Mask > 0;
+        let button5pressed = mask_return & xlib::Button5Mask > 0;
 
-            // Use 1-based indexing here so people can just query the button
-            // number they're interested in directly.
-            let button_pressed = vec![
-                false,
-                button1pressed,
-                button2pressed,
-                button3pressed,
-                button4pressed,
-                button5pressed,
-            ];
-            MouseState {
-                coords: (win_x, win_y),
-                button_pressed: button_pressed,
-            }
+        // Use 1-based indexing here so people can just query the button
+        // number they're interested in directly.
+        let button_pressed = vec![
+            false,
+            button1pressed,
+            button2pressed,
+            button3pressed,
+            button4pressed,
+            button5pressed,
+        ];
+        MouseState {
+            coords: (win_x, win_y),
+            button_pressed: button_pressed,
         }
     }
 
     pub fn query_keymap(&self) -> Vec<Keycode> {
+        let mut keycodes = vec![];
         unsafe {
             let keymap: *mut i8 = [0; 32].as_mut_ptr();
-            let mut keycodes = vec![];
             xlib::XQueryKeymap(self.display, keymap);
             for (ix, byte) in
                 slice::from_raw_parts(keymap, 32).iter().enumerate()
@@ -99,9 +99,9 @@ impl DeviceState {
                     }
                 }
             }
-            keycodes.dedup();
-            keycodes
         }
+        keycodes.dedup();
+        keycodes
     }
 
     fn keysym_to_key(&self, keysym: u32) -> Option<Keycode> {
