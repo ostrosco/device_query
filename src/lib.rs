@@ -1,5 +1,15 @@
 //! A simple library for querying mouse and keyboard state without requiring
 //! an active window. Currently works in Windows and Linux.
+//!
+//! ```
+//! use device_query::{DeviceQuery, DeviceState, MouseState, Keycode};
+//!
+//! let device_state = DeviceState::new();
+//! let mouse: MouseState = device_state.get_mouse();
+//! println!("Current Mouse Coordinates: {:?}", mouse.coords);
+//! let keys: Vec<Keycode> = device_state.get_keys();
+//! println!("Is A pressed? {}", keys.contains(&Keycode::A));
+//! ```
 
 pub mod keymap;
 pub mod mouse_state;
@@ -7,12 +17,12 @@ pub use keymap::Keycode;
 pub use mouse_state::MouseState;
 
 #[cfg(target_os = "linux")]
-pub mod linux;
+mod linux;
 #[cfg(target_os = "linux")]
 pub use linux::DeviceState;
 
 #[cfg(target_os = "windows")]
-pub mod windows;
+mod windows;
 #[cfg(target_os = "windows")]
 pub use windows::DeviceState;
 
