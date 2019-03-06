@@ -1,4 +1,4 @@
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Clone)]
 /// A list of supported keys that we can query from the OS. Outside of mod
 /// keys, we only support English keys at the moment.
 pub enum Keycode {
