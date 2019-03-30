@@ -96,6 +96,9 @@ impl DeviceState {
                                 None => (),
                             }
                         }
+
+                        // Free the memory allocated by XGetKeyboardMapping.
+                        xlib::XFree(keysym as *mut std::ffi::c_void);
                     }
                 }
             }
