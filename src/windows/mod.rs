@@ -93,6 +93,7 @@ impl DeviceState {
             winuser::VK_LMENU => Some(Keycode::LAlt),
             winuser::VK_RMENU => Some(Keycode::RAlt),
             winuser::VK_RETURN => Some(Keycode::Enter),
+            winuser::VK_ESCAPE => Some(Keycode::Escape),
             _ => None,
         };
 
