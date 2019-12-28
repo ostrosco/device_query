@@ -1,5 +1,5 @@
 //! A simple library for querying mouse and keyboard state without requiring
-//! an active window. Currently works in Windows and Linux.
+//! an active window. Currently works in Windows, Linux, and macOS.
 //!
 //! ```no-run
 //! use device_query::{DeviceQuery, DeviceState, MouseState, Keycode};
@@ -25,6 +25,11 @@ pub use linux::DeviceState;
 mod windows;
 #[cfg(target_os = "windows")]
 pub use windows::DeviceState;
+
+#[cfg(target_os = "macos")]
+mod macos;
+#[cfg(target_os = "macos")]
+pub use macos::DeviceState;
 
 pub trait DeviceQuery {
     fn get_mouse(&self) -> MouseState;
