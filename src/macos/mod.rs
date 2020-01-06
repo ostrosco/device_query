@@ -61,6 +61,10 @@ const MAPPING: &[(readkey::Keycode, Keycode)] = &[
     (readkey::Keycode::Option, Keycode::LAlt),
     (readkey::Keycode::RightOption, Keycode::RAlt),
     (readkey::Keycode::Return, Keycode::Enter),
+    (readkey::Keycode::Up, Keycode::Up),
+    (readkey::Keycode::Down, Keycode::Down),
+    (readkey::Keycode::Left, Keycode::Left),
+    (readkey::Keycode::Right, Keycode::Right),
 ];
 
 impl DeviceState {
