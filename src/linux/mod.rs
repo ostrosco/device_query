@@ -166,6 +166,10 @@ impl DeviceState {
             keysym::XK_Alt_L => Some(Keycode::LAlt),
             keysym::XK_Alt_R => Some(Keycode::RAlt),
             keysym::XK_Return => Some(Keycode::Enter),
+            keysym::XK_Up => Some(Keycode::Up),
+            keysym::XK_Down => Some(Keycode::Down),
+            keysym::XK_Left => Some(Keycode::Left),
+            keysym::XK_Right => Some(Keycode::Right),
             _ => None,
         }
     }

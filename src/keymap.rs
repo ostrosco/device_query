@@ -59,4 +59,8 @@ pub enum Keycode {
     LAlt,
     RAlt,
     Enter,
+    Up,
+    Down,
+    Left,
+    Right,
 }
