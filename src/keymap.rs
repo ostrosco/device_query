@@ -1,6 +1,5 @@
 #[derive(Debug, PartialEq, Clone)]
-/// A list of supported keys that we can query from the OS. Outside of mod
-/// keys, we only support English keys at the moment.
+/// A list of supported keys that we can query from the OS. Outside of mod.
 pub enum Keycode {
     Key0,
     Key1,
@@ -58,9 +57,33 @@ pub enum Keycode {
     RShift,
     LAlt,
     RAlt,
+    Meta,
     Enter,
     Up,
     Down,
     Left,
     Right,
+    Backspace,
+    CapsLock,
+    Tab,
+    Home,
+    End,
+    PageUp,
+    PageDown,
+    Insert,
+    Delete,
+
+    // The following keys names represent the position of the key in a US keyboard,
+    // not the sign value. In a different keyboards and OS, the position can vary.
+    Grave,
+    Minus,
+    Equal,
+    LeftBracket,
+    RightBracket,
+    BackSlash,
+    Semicolon,
+    Apostrophe,
+    Comma,
+    Dot,
+    Slash,
 }

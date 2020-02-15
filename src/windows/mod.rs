@@ -62,7 +62,7 @@ impl DeviceState {
         }
         for (ix, byte) in keymap.iter().enumerate() {
             if *byte as u32 & 0x8000 != 0 {
-                match self.keycode_to_key(ix as i32) {
+                match self.win_key_to_keycode(ix as i32) {
                     Some(k) => keycodes.push(k),
                     None => (),
                 }
@@ -71,8 +71,8 @@ impl DeviceState {
         keycodes
     }
 
-    fn keycode_to_key(&self, keycode: i32) -> Option<Keycode> {
-        let mut key = match keycode {
+    fn win_key_to_keycode(&self, win_key: i32) -> Option<Keycode> {
+        let mut keycode = match win_key {
             winuser::VK_F1 => Some(Keycode::F1),
             winuser::VK_F2 => Some(Keycode::F2),
             winuser::VK_F3 => Some(Keycode::F3),
@@ -92,18 +92,41 @@ impl DeviceState {
             winuser::VK_RSHIFT => Some(Keycode::RShift),
             winuser::VK_LMENU => Some(Keycode::LAlt),
             winuser::VK_RMENU => Some(Keycode::RAlt),
+            winuser::VK_LWIN => Some(Keycode::Meta),
+            winuser::VK_RWIN => Some(Keycode::Meta),
             winuser::VK_RETURN => Some(Keycode::Enter),
             winuser::VK_ESCAPE => Some(Keycode::Escape),
             winuser::VK_UP => Some(Keycode::Up),
             winuser::VK_DOWN => Some(Keycode::Down),
             winuser::VK_LEFT => Some(Keycode::Left),
             winuser::VK_RIGHT => Some(Keycode::Right),
+            winuser::VK_BACK => Some(Keycode::Backspace),
+            winuser::VK_CAPITAL => Some(Keycode::CapsLock),
+            winuser::VK_TAB => Some(Keycode::Tab),
+            winuser::VK_HOME => Some(Keycode::Home),
+            winuser::VK_END => Some(Keycode::End),
+            winuser::VK_PRIOR => Some(Keycode::PageUp),
+            winuser::VK_NEXT => Some(Keycode::PageDown),
+            winuser::VK_INSERT => Some(Keycode::Insert),
+            winuser::VK_DELETE => Some(Keycode::Delete),
+            winuser::VK_OEM_3 => Some(Keycode::Grave),
+            winuser::VK_OEM_MINUS => Some(Keycode::Minus),
+            winuser::VK_OEM_PLUS => Some(Keycode::Equal),
+            winuser::VK_OEM_4 => Some(Keycode::LeftBracket),
+            winuser::VK_OEM_6 => Some(Keycode::RightBracket),
+            winuser::VK_OEM_5 => Some(Keycode::BackSlash),
+            winuser::VK_OEM_1 => Some(Keycode::Semicolon),
+            winuser::VK_OEM_7 => Some(Keycode::Apostrophe),
+            winuser::VK_OEM_COMMA => Some(Keycode::Comma),
+            winuser::VK_OEM_PERIOD => Some(Keycode::Dot),
+            winuser::VK_OEM_2 => Some(Keycode::Slash),
+
             _ => None,
         };
 
-        if key.is_none() {
-            let keycode = keycode as u8;
-            key = match keycode as char {
+        if keycode.is_none() {
+            let win_key = win_key as u8;
+            keycode = match win_key as char {
                 '0' => Some(Keycode::Key0),
                 '1' => Some(Keycode::Key1),
                 '2' => Some(Keycode::Key2),
@@ -143,6 +166,6 @@ impl DeviceState {
                 _ => None,
             }
         }
-        key
+        keycode
     }
 }

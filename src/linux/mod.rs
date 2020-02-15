@@ -1,7 +1,7 @@
 extern crate x11;
+extern crate input_event_codes as kernel_key;
 
 use linux::x11::xlib;
-use linux::x11::keysym;
 use std::ptr;
 use keymap::Keycode;
 use mouse_state::MouseState;
@@ -76,100 +76,105 @@ impl DeviceState {
                 for bit in 0_u8..8_u8 {
                     let bitmask = 1 << bit;
                     if byte & bitmask != 0 {
-                        let keycode = ix as u8 * 8 + bit;
-                        let mut keysyms_per_keycode_return = 0_i32;
-                        let keysym = xlib::XGetKeyboardMapping(
-                            self.display,
-                            keycode,
-                            1,
-                            &mut keysyms_per_keycode_return,
-                        );
-
-                        for ks in slice::from_raw_parts(
-                            keysym,
-                            keysyms_per_keycode_return as usize,
-                        ).iter()
-                        {
-                            let key = self.keysym_to_key(*ks as u32);
-                            match key {
-                                Some(k) => keycodes.push(k),
-                                None => (),
-                            }
+                        //x11 keycode uses kernel keycode with an offset of 8.
+                        let x11_key = ix as u8 * 8 + bit;
+                        let kernel_key = x11_key - 8;
+                        match self.kernel_key_to_keycode(kernel_key) {
+                            Some(k) => keycodes.push(k),
+                            None => (),
                         }
-
-                        // Free the memory allocated by XGetKeyboardMapping.
-                        xlib::XFree(keysym as *mut std::ffi::c_void);
                     }
                 }
             }
         }
-        keycodes.dedup();
         keycodes
     }
 
-    fn keysym_to_key(&self, keysym: u32) -> Option<Keycode> {
-        match keysym {
-            keysym::XK_0 => Some(Keycode::Key0),
-            keysym::XK_1 => Some(Keycode::Key1),
-            keysym::XK_2 => Some(Keycode::Key2),
-            keysym::XK_3 => Some(Keycode::Key3),
-            keysym::XK_4 => Some(Keycode::Key4),
-            keysym::XK_5 => Some(Keycode::Key5),
-            keysym::XK_6 => Some(Keycode::Key6),
-            keysym::XK_7 => Some(Keycode::Key7),
-            keysym::XK_8 => Some(Keycode::Key8),
-            keysym::XK_9 => Some(Keycode::Key9),
-            keysym::XK_A => Some(Keycode::A),
-            keysym::XK_B => Some(Keycode::B),
-            keysym::XK_C => Some(Keycode::C),
-            keysym::XK_D => Some(Keycode::D),
-            keysym::XK_E => Some(Keycode::E),
-            keysym::XK_F => Some(Keycode::F),
-            keysym::XK_G => Some(Keycode::G),
-            keysym::XK_H => Some(Keycode::H),
-            keysym::XK_I => Some(Keycode::I),
-            keysym::XK_J => Some(Keycode::J),
-            keysym::XK_K => Some(Keycode::K),
-            keysym::XK_L => Some(Keycode::L),
-            keysym::XK_M => Some(Keycode::M),
-            keysym::XK_N => Some(Keycode::N),
-            keysym::XK_O => Some(Keycode::O),
-            keysym::XK_P => Some(Keycode::P),
-            keysym::XK_Q => Some(Keycode::Q),
-            keysym::XK_R => Some(Keycode::R),
-            keysym::XK_S => Some(Keycode::S),
-            keysym::XK_T => Some(Keycode::T),
-            keysym::XK_U => Some(Keycode::U),
-            keysym::XK_V => Some(Keycode::V),
-            keysym::XK_W => Some(Keycode::W),
-            keysym::XK_X => Some(Keycode::X),
-            keysym::XK_Y => Some(Keycode::Y),
-            keysym::XK_Z => Some(Keycode::Z),
-            keysym::XK_F1 => Some(Keycode::F1),
-            keysym::XK_F2 => Some(Keycode::F2),
-            keysym::XK_F3 => Some(Keycode::F3),
-            keysym::XK_F4 => Some(Keycode::F4),
-            keysym::XK_F5 => Some(Keycode::F5),
-            keysym::XK_F6 => Some(Keycode::F6),
-            keysym::XK_F7 => Some(Keycode::F7),
-            keysym::XK_F8 => Some(Keycode::F8),
-            keysym::XK_F9 => Some(Keycode::F9),
-            keysym::XK_F10 => Some(Keycode::F10),
-            keysym::XK_F11 => Some(Keycode::F11),
-            keysym::XK_F12 => Some(Keycode::F12),
-            keysym::XK_Escape => Some(Keycode::Escape),
-            keysym::XK_space => Some(Keycode::Space),
-            keysym::XK_Control_L => Some(Keycode::LControl),
-            keysym::XK_Control_R => Some(Keycode::RControl),
-            keysym::XK_Shift_L => Some(Keycode::LShift),
-            keysym::XK_Shift_R => Some(Keycode::RShift),
-            keysym::XK_Alt_L => Some(Keycode::LAlt),
-            keysym::XK_Alt_R => Some(Keycode::RAlt),
-            keysym::XK_Return => Some(Keycode::Enter),
-            keysym::XK_Up => Some(Keycode::Up),
-            keysym::XK_Down => Some(Keycode::Down),
-            keysym::XK_Left => Some(Keycode::Left),
-            keysym::XK_Right => Some(Keycode::Right),
+    fn kernel_key_to_keycode(&self, kernel_code: u8) -> Option<Keycode> {
+        match kernel_code as u16 {
+            kernel_key::KEY_0 => Some(Keycode::Key0),
+            kernel_key::KEY_1 => Some(Keycode::Key1),
+            kernel_key::KEY_2 => Some(Keycode::Key2),
+            kernel_key::KEY_3 => Some(Keycode::Key3),
+            kernel_key::KEY_4 => Some(Keycode::Key4),
+            kernel_key::KEY_5 => Some(Keycode::Key5),
+            kernel_key::KEY_6 => Some(Keycode::Key6),
+            kernel_key::KEY_7 => Some(Keycode::Key7),
+            kernel_key::KEY_8 => Some(Keycode::Key8),
+            kernel_key::KEY_9 => Some(Keycode::Key9),
+            kernel_key::KEY_A => Some(Keycode::A),
+            kernel_key::KEY_B => Some(Keycode::B),
+            kernel_key::KEY_C => Some(Keycode::C),
+            kernel_key::KEY_D => Some(Keycode::D),
+            kernel_key::KEY_E => Some(Keycode::E),
+            kernel_key::KEY_F => Some(Keycode::F),
+            kernel_key::KEY_G => Some(Keycode::G),
+            kernel_key::KEY_H => Some(Keycode::H),
+            kernel_key::KEY_I => Some(Keycode::I),
+            kernel_key::KEY_J => Some(Keycode::J),
+            kernel_key::KEY_K => Some(Keycode::K),
+            kernel_key::KEY_L => Some(Keycode::L),
+            kernel_key::KEY_M => Some(Keycode::M),
+            kernel_key::KEY_N => Some(Keycode::N),
+            kernel_key::KEY_O => Some(Keycode::O),
+            kernel_key::KEY_P => Some(Keycode::P),
+            kernel_key::KEY_Q => Some(Keycode::Q),
+            kernel_key::KEY_R => Some(Keycode::R),
+            kernel_key::KEY_S => Some(Keycode::S),
+            kernel_key::KEY_T => Some(Keycode::T),
+            kernel_key::KEY_U => Some(Keycode::U),
+            kernel_key::KEY_V => Some(Keycode::V),
+            kernel_key::KEY_W => Some(Keycode::W),
+            kernel_key::KEY_X => Some(Keycode::X),
+            kernel_key::KEY_Y => Some(Keycode::Y),
+            kernel_key::KEY_Z => Some(Keycode::Z),
+            kernel_key::KEY_F1 => Some(Keycode::F1),
+            kernel_key::KEY_F2 => Some(Keycode::F2),
+            kernel_key::KEY_F3 => Some(Keycode::F3),
+            kernel_key::KEY_F4 => Some(Keycode::F4),
+            kernel_key::KEY_F5 => Some(Keycode::F5),
+            kernel_key::KEY_F6 => Some(Keycode::F6),
+            kernel_key::KEY_F7 => Some(Keycode::F7),
+            kernel_key::KEY_F8 => Some(Keycode::F8),
+            kernel_key::KEY_F9 => Some(Keycode::F9),
+            kernel_key::KEY_F10 => Some(Keycode::F10),
+            kernel_key::KEY_F11 => Some(Keycode::F11),
+            kernel_key::KEY_F12 => Some(Keycode::F12),
+            kernel_key::KEY_ESC => Some(Keycode::Escape),
+            kernel_key::KEY_SPACE => Some(Keycode::Space),
+            kernel_key::KEY_LEFTCTRL => Some(Keycode::LControl),
+            kernel_key::KEY_RIGHTCTRL => Some(Keycode::RControl),
+            kernel_key::KEY_LEFTSHIFT => Some(Keycode::LShift),
+            kernel_key::KEY_RIGHTSHIFT => Some(Keycode::RShift),
+            kernel_key::KEY_LEFTALT => Some(Keycode::LAlt),
+            kernel_key::KEY_RIGHTALT => Some(Keycode::RAlt),
+            kernel_key::KEY_LEFTMETA => Some(Keycode::Meta),
+            kernel_key::KEY_RIGHTMETA => Some(Keycode::Meta),
+            kernel_key::KEY_ENTER => Some(Keycode::Enter),
+            kernel_key::KEY_UP => Some(Keycode::Up),
+            kernel_key::KEY_DOWN => Some(Keycode::Down),
+            kernel_key::KEY_LEFT => Some(Keycode::Left),
+            kernel_key::KEY_RIGHT => Some(Keycode::Right),
+            kernel_key::KEY_BACKSPACE => Some(Keycode::Backspace),
+            kernel_key::KEY_CAPSLOCK => Some(Keycode::CapsLock),
+            kernel_key::KEY_TAB => Some(Keycode::Tab),
+            kernel_key::KEY_HOME => Some(Keycode::Home),
+            kernel_key::KEY_END => Some(Keycode::End),
+            kernel_key::KEY_PAGEUP => Some(Keycode::PageUp),
+            kernel_key::KEY_PAGEDOWN => Some(Keycode::PageDown),
+            kernel_key::KEY_INSERT => Some(Keycode::Insert),
+            kernel_key::KEY_DELETE => Some(Keycode::Delete),
+            kernel_key::KEY_GRAVE => Some(Keycode::Grave),
+            kernel_key::KEY_MINUS => Some(Keycode::Minus),
+            kernel_key::KEY_EQUAL => Some(Keycode::Equal),
+            kernel_key::KEY_LEFTBRACE => Some(Keycode::LeftBracket),
+            kernel_key::KEY_RIGHTBRACE => Some(Keycode::RightBracket),
+            kernel_key::KEY_BACKSLASH => Some(Keycode::BackSlash),
+            kernel_key::KEY_SEMICOLON => Some(Keycode::Semicolon),
+            kernel_key::KEY_APOSTROPHE => Some(Keycode::Apostrophe),
+            kernel_key::KEY_COMMA => Some(Keycode::Comma),
+            kernel_key::KEY_DOT => Some(Keycode::Dot),
+            kernel_key::KEY_SLASH => Some(Keycode::Slash),
             _ => None,
         }
     }
