@@ -1,6 +1,6 @@
 [package]
 name = "device_query"
-version = "0.2.2"
+version = "0.2.3"
 authors = ["ostrosco <ostrosco@fastmail.fm>"]
 build = "build.rs"
 description = "A basic library for querying keyboard and mouse state on-demand without a window."
