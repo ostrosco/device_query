@@ -14,7 +14,6 @@ pub struct DeviceState {
 impl DeviceState {
     pub fn new() -> DeviceState {
         unsafe {
-            xlib::XInitThreads();
             let disp = xlib::XOpenDisplay(ptr::null());
             DeviceState { display: disp }
         }
