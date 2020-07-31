@@ -1,13 +1,13 @@
 [package]
-name = "device_query"
-version = "0.2.4"
-authors = ["ostrosco <ostrosco@fastmail.fm>"]
+name = "keyboard_query"
+version = "0.1.0"
+authors = ["YXL <chenxin.lan.76@gmail.com>"]
 build = "build.rs"
-description = "A basic library for querying keyboard and mouse state on-demand without a window."
-homepage = "https://github.com/ostrosco/device_query"
-repository = "https://github.com/ostrosco/device_query"
+description = ""
+homepage = "https://github.com/YXL76/keyboard_query"
+repository = "https://github.com/YXL76/keyboard_query"
 readme = "README.md"
-keywords = ["input", "mouse", "keyboard"]
+keywords = ["input", "keyboard"]
 license = "MIT"
 
 [build-dependencies]
