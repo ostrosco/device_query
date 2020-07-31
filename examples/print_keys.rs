@@ -1,6 +1,6 @@
-extern crate device_query;
+extern crate keyboard_query;
 
-use device_query::{DeviceQuery, DeviceState};
+use keyboard_query::{DeviceQuery, DeviceState};
 
 fn main() {
     let device_state = DeviceState::new();
