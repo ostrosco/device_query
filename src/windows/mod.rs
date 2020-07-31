@@ -13,10 +13,10 @@ impl DeviceState {
         let mut keycodes = vec![];
         for key in 0_u16..256_u16 {
             unsafe {
-                let state = GetAsyncKeyState(key) as u32;
-            }
-            if (state & 0x8000 != 0) {
-                keycodes.push(key);
+                let state = GetAsyncKeyState(key as i32) as u32;
+                if state & 0x8000 != 0 {
+                    keycodes.push(key);
+                }
             }
         }
         keycodes
