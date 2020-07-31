@@ -6,15 +6,11 @@ on:
       - "v*"
 
 jobs:
-  test:
-    strategy:
-      matrix:
-        os: [macos-latest, ubuntu-latest, windows-latest]
-    runs-on: ${{ matrix.os }}
-    name: Build on ${{ matrix.os }}
+  release:
+    runs-on: ubuntu-latest
+    name: Release
     steps:
       - name: Installing needed Ubuntu dependencies
-        if: matrix.os == 'ubuntu-latest'
         run: |
           sudo apt-get update
           sudo apt-get install -y libx11-dev
@@ -24,4 +20,6 @@ jobs:
           override: true
       - name: Checkout
         uses: actions/checkout@v2
-      - run: cargo build
+      - run: /
+          cargo publish --dry-run
+          cargo publish --token ${{ secrets.CARGO_REGISTRY_TOKEN }}
