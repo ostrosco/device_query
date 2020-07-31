@@ -1,4 +1,3 @@
-extern crate input_event_codes as kernel_key;
 extern crate x11;
 
 use linux::x11::xlib;

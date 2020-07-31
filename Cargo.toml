@@ -10,20 +10,11 @@ readme = "README.md"
 keywords = ["input", "mouse", "keyboard"]
 license = "MIT"
 
-[badges]
-travis-ci = { repository = "ostrosco/device_query" }
-
 [build-dependencies]
 pkg-config = "0.3.18"
 
 [target.'cfg(target_os = "linux")'.dependencies]
 x11 = {version = "2.18.2", features = ["xlib"] }
-input-event-codes = "0.2.1"
 
 [target.'cfg(target_os = "windows")'.dependencies]
 user32-sys = "0.2.0"
-winapi = "0.3.9"
-
-[target.'cfg(target_os = "macos")'.dependencies]
-readkey = "0.2.1"
-readmouse = "0.2.1"
