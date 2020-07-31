@@ -1,5 +1,4 @@
 extern crate user32;
-extern crate winapi;
 
 use windows::user32::GetAsyncKeyState;
 
