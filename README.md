@@ -1,7 +1,5 @@
 # device_query
 
-[![Build Status](https://travis-ci.org/ostrosco/device_query.svg?branch=master)](https://travis-ci.org/ostrosco/device_query)
-
 A simple library to query mouse and keyboard inputs on demand without a window.
 Will work in Windows, Linux on X11, and macOS.
 
@@ -22,11 +20,13 @@ Windows and macOS shouldn't require any special software to be installed for
 are required for `device_query` to query state from the OS.
 
 On Ubuntu/Debian:
+
 ```
 sudo apt install libx11-dev
 ```
 
 On Fedora/RHEL/CentOS:
+
 ```
 sudo dnf install xorg-x11-server-devel
 ```
