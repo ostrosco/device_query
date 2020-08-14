@@ -1,10 +1,10 @@
-extern crate x11;
 extern crate input_event_codes as kernel_key;
+extern crate x11;
 
-use linux::x11::xlib;
-use std::ptr;
 use keymap::Keycode;
+use linux::x11::xlib;
 use mouse_state::MouseState;
+use std::ptr;
 use std::slice;
 
 pub struct DeviceState {
