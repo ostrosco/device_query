@@ -11,6 +11,12 @@ pub struct DeviceState {
     display: *mut xlib::Display,
 }
 
+impl Default for DeviceState {
+    fn default() -> Self {
+        Self::new()
+    }
+}
+
 impl DeviceState {
     pub fn new() -> DeviceState {
         unsafe {
