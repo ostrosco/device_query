@@ -1,4 +1,4 @@
-#[derive(Debug, PartialEq)]
+#[derive(Debug, PartialEq, Default)]
 /// A simple structure containing the current mouse coordinates and the
 /// state of each mouse button that we can query. Currently, Windows and
 /// Linux provide nice ways to query five mouse buttons. Since button
