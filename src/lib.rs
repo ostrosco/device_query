@@ -1,7 +1,7 @@
 //! A simple library for querying mouse and keyboard state without requiring
 //! an active window. Currently works in Windows, Linux, and macOS.
 //!
-//! ```no-run
+//! ```no_run
 //! use device_query::{DeviceQuery, DeviceState, MouseState, Keycode};
 //!
 //! let device_state = DeviceState::new();
