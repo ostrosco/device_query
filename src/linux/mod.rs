@@ -4,6 +4,7 @@ extern crate x11;
 use keymap::Keycode;
 use linux::x11::xlib;
 use mouse_state::MouseState;
+use std::os::raw::c_char;
 use std::ptr;
 use std::slice;
 
@@ -73,7 +74,7 @@ impl DeviceState {
     pub fn query_keymap(&self) -> Vec<Keycode> {
         let mut keycodes = vec![];
         unsafe {
-            let keymap: *mut i8 = [0; 32].as_mut_ptr();
+            let keymap: *mut c_char = [0; 32].as_mut_ptr();
             xlib::XQueryKeymap(self.display, keymap);
             for (ix, byte) in
                 slice::from_raw_parts(keymap, 32).iter().enumerate()
