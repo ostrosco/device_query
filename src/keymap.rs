@@ -1,4 +1,5 @@
 use std::str::FromStr;
+use std::fmt;
 
 #[derive(Debug, PartialEq, Clone)]
 /// A list of supported keys that we can query from the OS. Outside of mod.
@@ -177,5 +178,11 @@ impl FromStr for Keycode {
             "Slash" => Ok(Self::Slash),
             _ => Err(String::from("failed to parse keycode")),
         }
+    }
+}
+
+impl fmt::Display for Keycode {
+    fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
+        write!(f, "{:?}", self)
     }
 }
