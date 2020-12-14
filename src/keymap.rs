@@ -76,7 +76,7 @@ pub enum Keycode {
     Insert,
     Delete,
 
-    // The following keys have only been implemented in windows
+    // The following keys have only been implemented for windows
     Numpad0,
     Numpad1,
     Numpad2,
