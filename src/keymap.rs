@@ -76,6 +76,22 @@ pub enum Keycode {
     Insert,
     Delete,
 
+    // The following keys have only been implemented in windows
+    Numpad0,
+    Numpad1,
+    Numpad2,
+    Numpad3,
+    Numpad4,
+    Numpad5,
+    Numpad6,
+    Numpad7,
+    Numpad8,
+    Numpad9,
+    NumpadSubtract,
+    NumpadAdd,
+    NumpadDivide,
+    NumpadMultiply,
+
     // The following keys names represent the position of the key in a US keyboard,
     // not the sign value. In a different keyboards and OS, the position can vary.
     Grave,
