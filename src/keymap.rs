@@ -76,7 +76,7 @@ pub enum Keycode {
     Insert,
     Delete,
 
-    // The following keys have only been tested on windows!
+    // The following keys have not been tested on MacOS!
     Numpad0,
     Numpad1,
     Numpad2,
