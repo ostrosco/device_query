@@ -156,6 +156,7 @@ impl DeviceState {
             kernel_key::KEY_KP7 => Some(Keycode::Numpad7),
             kernel_key::KEY_KP8 => Some(Keycode::Numpad8),
             kernel_key::KEY_KP9 => Some(Keycode::Numpad9),
+            kernel_key::KEY_KPENTER => Some(Keycode::Enter),
             kernel_key::KEY_KPMINUS => Some(Keycode::NumpadSubtract),
             kernel_key::KEY_KPPLUS => Some(Keycode::NumpadAdd),
             kernel_key::KEY_KPSLASH => Some(Keycode::NumpadDivide),
