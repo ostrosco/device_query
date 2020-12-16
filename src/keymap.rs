@@ -77,6 +77,7 @@ pub enum Keycode {
     Delete,
 
     // The following keys have not been tested on MacOS!
+    // Numpad keys which have not been implemented: NumpadSeparator NumLock
     Numpad0,
     Numpad1,
     Numpad2,
