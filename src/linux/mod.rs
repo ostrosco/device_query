@@ -21,8 +21,12 @@ impl Default for DeviceState {
 impl DeviceState {
     pub fn new() -> DeviceState {
         unsafe {
-            let disp = xlib::XOpenDisplay(ptr::null());
-            DeviceState { display: disp }
+            let display = xlib::XOpenDisplay(ptr::null());
+            match display.as_ref() {
+                Some(_) => (),
+                None => panic!("Could not connect to a X display")
+            }
+            DeviceState { display }
         }
     }
 
