@@ -17,9 +17,8 @@ println!("Is A pressed? {}", keys.contains(Keycode::A));
 
 # Dependencies
 
-Windows and macOS shouldn't require any special software to be installed for
-`device_query` to work properly. On Linux, the X11 development libraries
-are required for `device_query` to query state from the OS.
+Windows shouldn't require any special software to be installed for `device_query` to work properly.
+On Linux, the X11 development libraries are required for `device_query` to query state from the OS.
 
 On Ubuntu/Debian:
 ```
@@ -30,3 +29,11 @@ On Fedora/RHEL/CentOS:
 ```
 sudo dnf install xorg-x11-server-devel
 ```
+
+On newer versions of MacOS, you may run into issues where you only see meta keys such as shift,
+backspace, et cetera. This is due to a permission issue. To work around this:
+
+* open the MacOS system preferences
+* go to Security -> Privacy
+* scroll down to Accessbility and unlock it
+* add the app that is using `device_query` (such as your terminal) to the list
