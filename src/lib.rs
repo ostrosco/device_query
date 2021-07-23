@@ -1,4 +1,4 @@
-//! A simple library for querying mouse and keyboard device_state without requiring
+//! A simple library for querying mouse and keyboard state without requiring
 //! an active window. Currently works in Windows, Linux, and macOS.
 //!
 //! ```no_run
