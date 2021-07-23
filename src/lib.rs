@@ -10,6 +10,31 @@
 //! let keys: Vec<Keycode> = device_state.get_keys();
 //! println!("Is A pressed? {}", keys.contains(&Keycode::A));
 //! ```
+//! It's also possible to listen for events.
+//! ```no_run
+//! use device_query::{DeviceEvents, DeviceState};
+//!
+//! fn main() {
+//!     let device_state = DeviceState::new();
+//!     let _guard = device_state.on_mouse_move(|position| {
+//!         println!("Mouse position: {:#?}", position);
+//!     });
+//!     let _guard = device_state.on_mouse_down(|button| {
+//!         println!("Mouse button down: {:#?}", button);
+//!     });
+//!     let _guard = device_state.on_mouse_up(|button| {
+//!         println!("Mouse button up: {:#?}", button);
+//!     });
+//!     let _guard = device_state.on_key_down(|key| {
+//!         println!("Keyboard key down: {:#?}", key);
+//!     });
+//!     let _guard = device_state.on_key_up(|key| {
+//!         println!("Keyboard key up: {:#?}", key);
+//!     });
+//!
+//!     loop {}
+//! }
+//! ```
 
 #[macro_use]
 extern crate lazy_static;
@@ -20,8 +45,8 @@ pub mod device_state;
 pub mod device_query;
 pub mod device_events;
 
-pub use keymap::Keycode;
-pub use mouse_state::MouseState;
-pub use device_state::DeviceState;
-pub use device_query::DeviceQuery;
-pub use device_events::{DeviceEvents, CallbackGuard};
+pub use keymap::*;
+pub use mouse_state::*;
+pub use device_state::*;
+pub use device_query::*;
+pub use device_events::*;

@@ -1,8 +1,11 @@
+//! List of keycodes.
+
 use std::fmt;
 use std::str::FromStr;
 
-#[derive(Debug, PartialEq, Clone)]
 /// A list of supported keys that we can query from the OS. Outside of mod.
+#[derive(Debug, PartialEq, Clone, Copy)]
+#[allow(missing_docs)]
 pub enum Keycode {
     Key0,
     Key1,
