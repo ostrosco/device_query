@@ -8,6 +8,8 @@ use std::os::raw::c_char;
 use std::ptr;
 use std::slice;
 
+#[derive(Debug, Clone, Copy)]
+/// Device state descriptor.
 pub struct DeviceState {
     display: *mut xlib::Display,
 }
@@ -19,6 +21,7 @@ impl Default for DeviceState {
 }
 
 impl DeviceState {
+    /// Creates a new DeviceState.
     pub fn new() -> DeviceState {
         unsafe {
             let display = xlib::XOpenDisplay(ptr::null());
@@ -29,6 +32,7 @@ impl DeviceState {
         }
     }
 
+    /// Query the `MouseState`.
     pub fn query_pointer(&self) -> MouseState {
         let root;
         let mut root_x = 0;
@@ -74,6 +78,7 @@ impl DeviceState {
         }
     }
 
+    /// Query the Keyboard state.
     pub fn query_keymap(&self) -> Vec<Keycode> {
         let mut keycodes = vec![];
         unsafe {

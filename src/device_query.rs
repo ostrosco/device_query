@@ -1,8 +1,14 @@
+//! Query functions.
+
 use ::{MouseState, Keycode};
 use DeviceState;
 
+/// Trait to get the state of the supported devices.
 pub trait DeviceQuery {
+    /// Get MouseState.
     fn get_mouse(&self) -> MouseState;
+
+    /// Get Keyboard state.
     fn get_keys(&self) -> Vec<Keycode>;
 }
 
