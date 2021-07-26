@@ -1,4 +1,7 @@
+# IDEs auto-generated files
 .idea
+
+# Cargo files
 /target/
 **/*.rs.bk
 Cargo.lock
