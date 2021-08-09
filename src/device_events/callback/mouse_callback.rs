@@ -1,9 +1,10 @@
 //! Mouse callback.
 
-use std::sync::{Mutex, Arc, Weak};
-use ::MouseButton;
+use crate::device_events::utils;
+use std::ops::DerefMut;
+use std::sync::{Arc, Mutex, Weak};
+use MouseButton;
 use MousePosition;
-use crate::device_events::utils::DrainFilter;
 
 /// Mouse move callback.
 pub type MouseMoveCallback = dyn Fn(&MousePosition) + Sync + Send + 'static;
@@ -41,10 +42,12 @@ impl MouseCallbacks {
         }
     }
 
-    #[allow(unstable_name_collisions)]
     pub fn run_mouse_move(&self, position: &MousePosition) {
         if let Ok(mut callbacks) = self.mouse_move.lock() {
-            callbacks.drain_filter(|callback| callback.upgrade().is_none());
+            utils::DrainFilter::drain_filter(
+                callbacks.deref_mut(),
+                |callback| callback.upgrade().is_none(),
+            );
             for callback in callbacks.iter() {
                 if let Some(callback) = callback.upgrade() {
                     callback(position);
@@ -53,10 +56,12 @@ impl MouseCallbacks {
         }
     }
 
-    #[allow(unstable_name_collisions)]
     pub fn run_mouse_down(&self, button: &MouseButton) {
         if let Ok(mut callbacks) = self.mouse_down.lock() {
-            callbacks.drain_filter(|callback| callback.upgrade().is_none());
+            utils::DrainFilter::drain_filter(
+                callbacks.deref_mut(),
+                |callback| callback.upgrade().is_none(),
+            );
             for callback in callbacks.iter() {
                 if let Some(callback) = callback.upgrade() {
                     callback(button);
@@ -65,10 +70,12 @@ impl MouseCallbacks {
         }
     }
 
-    #[allow(unstable_name_collisions)]
     pub fn run_mouse_up(&self, button: &MouseButton) {
         if let Ok(mut callbacks) = self.mouse_up.lock() {
-            callbacks.drain_filter(|callback| callback.upgrade().is_none());
+            utils::DrainFilter::drain_filter(
+                callbacks.deref_mut(),
+                |callback| callback.upgrade().is_none(),
+            );
             for callback in callbacks.iter() {
                 if let Some(callback) = callback.upgrade() {
                     callback(button);

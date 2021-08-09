@@ -1,6 +1,7 @@
+use crate::device_events::utils;
+use std::ops::DerefMut;
+use std::sync::{Arc, Mutex, Weak};
 use Keycode;
-use std::sync::{Mutex, Arc, Weak};
-use crate::device_events::utils::DrainFilter;
 
 /// Keyboard callback.
 pub type KeyboardCallback = dyn Fn(&Keycode) + Sync + Send + 'static;
@@ -27,10 +28,12 @@ impl KeyboardCallbacks {
         }
     }
 
-    #[allow(unstable_name_collisions)]
     pub fn run_key_up(&self, key: &Keycode) {
         if let Ok(mut callbacks) = self.key_up.lock() {
-            callbacks.drain_filter(|callback| callback.upgrade().is_none());
+            utils::DrainFilter::drain_filter(
+                callbacks.deref_mut(),
+                |callback| callback.upgrade().is_none(),
+            );
             for callback in callbacks.iter() {
                 if let Some(callback) = callback.upgrade() {
                     callback(key);
@@ -39,10 +42,12 @@ impl KeyboardCallbacks {
         }
     }
 
-    #[allow(unstable_name_collisions)]
     pub fn run_key_down(&self, key: &Keycode) {
         if let Ok(mut callbacks) = self.key_down.lock() {
-            callbacks.drain_filter(|callback| callback.upgrade().is_none());
+            utils::DrainFilter::drain_filter(
+                callbacks.deref_mut(),
+                |callback| callback.upgrade().is_none(),
+            );
             for callback in callbacks.iter() {
                 if let Some(callback) = callback.upgrade() {
                     callback(key);
