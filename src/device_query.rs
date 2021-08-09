@@ -1,7 +1,7 @@
 //! Query functions.
 
-use ::{MouseState, Keycode};
 use DeviceState;
+use {Keycode, MouseState};
 
 /// Trait to get the state of the supported devices.
 pub trait DeviceQuery {

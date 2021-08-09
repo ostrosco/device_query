@@ -12,41 +12,36 @@
 //! ```
 //! It's also possible to listen for events.
 //! ```no_run
-//! use device_query::{DeviceEvents, DeviceState};
-//!
-//! fn main() {
-//!     let device_state = DeviceState::new();
-//!     let _guard = device_state.on_mouse_move(|position| {
-//!         println!("Mouse position: {:#?}", position);
-//!     });
-//!     let _guard = device_state.on_mouse_down(|button| {
-//!         println!("Mouse button down: {:#?}", button);
-//!     });
-//!     let _guard = device_state.on_mouse_up(|button| {
-//!         println!("Mouse button up: {:#?}", button);
-//!     });
-//!     let _guard = device_state.on_key_down(|key| {
-//!         println!("Keyboard key down: {:#?}", key);
-//!     });
-//!     let _guard = device_state.on_key_up(|key| {
-//!         println!("Keyboard key up: {:#?}", key);
-//!     });
-//!
-//!     loop {}
-//! }
+//!  let device_state = DeviceState::new();
+//!  let _guard = device_state.on_mouse_move(|position| {
+//!     println!("Mouse position: {:#?}", position);
+//!  });
+//!  let _guard = device_state.on_mouse_down(|button| {
+//!     println!("Mouse button down: {:#?}", button);
+//!  });
+//!  let _guard = device_state.on_mouse_up(|button| {
+//!     println!("Mouse button up: {:#?}", button);
+//!  });
+//!  let _guard = device_state.on_key_down(|key| {
+//!     println!("Keyboard key down: {:#?}", key);
+//!  });
+//!  let _guard = device_state.on_key_up(|key| {
+//!     println!("Keyboard key up: {:#?}", key);
+//!  });//!
+//!  loop {}
 //! ```
 
 #[macro_use]
 extern crate lazy_static;
 
+pub mod device_events;
+pub mod device_query;
+pub mod device_state;
 pub mod keymap;
 pub mod mouse_state;
-pub mod device_state;
-pub mod device_query;
-pub mod device_events;
 
+pub use device_events::*;
+pub use device_query::*;
+pub use device_state::*;
 pub use keymap::*;
 pub use mouse_state::*;
-pub use device_state::*;
-pub use device_query::*;
-pub use device_events::*;

@@ -1,8 +1,8 @@
 extern crate input_event_codes as kernel_key;
 extern crate x11;
 
-use keymap::Keycode;
 use self::x11::xlib;
+use keymap::Keycode;
 use mouse_state::MouseState;
 use std::os::raw::c_char;
 use std::ptr;

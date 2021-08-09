@@ -6,5 +6,5 @@ use std::sync::Arc;
 /// the event listener is removed.
 #[derive(Debug)]
 pub struct CallbackGuard<Callback> {
-    pub(crate) _callback: Arc<Callback>
+    pub(crate) _callback: Arc<Callback>,
 }
