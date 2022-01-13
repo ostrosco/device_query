@@ -8,7 +8,7 @@ use std::os::raw::c_char;
 use std::ptr;
 use std::slice;
 
-#[derive(Debug, Clone, Copy)]
+#[derive(Debug, Clone)]
 /// Device state descriptor.
 pub struct DeviceState {
     display: *mut xlib::Display,
@@ -17,6 +17,14 @@ pub struct DeviceState {
 impl Default for DeviceState {
     fn default() -> Self {
         Self::new()
+    }
+}
+
+impl Drop for DeviceState {
+    fn drop(&mut self) {
+        unsafe {
+            xlib::XCloseDisplay(self.display);
+        }
     }
 }
 
