@@ -2,9 +2,9 @@ extern crate winapi;
 
 use keymap::Keycode;
 use mouse_state::MouseState;
-use windows::winapi::shared::windef::POINT;
-use windows::winapi::um::winuser;
-use windows::winapi::um::winuser::{GetAsyncKeyState, GetCursorPos};
+use self::winapi::shared::windef::POINT;
+use self::winapi::um::winuser;
+use self::winapi::um::winuser::{GetAsyncKeyState, GetCursorPos};
 
 pub struct DeviceState;
 
