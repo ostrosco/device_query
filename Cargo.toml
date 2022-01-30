@@ -29,3 +29,4 @@ winapi = { version = "0.3.9", features = ["winuser"]}
 [target.'cfg(target_os = "macos")'.dependencies]
 readkey = "0.1.7"
 readmouse = "0.2.0"
+macos-accessibility-client = "0.0.1"

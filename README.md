@@ -35,5 +35,5 @@ backspace, et cetera. This is due to a permission issue. To work around this:
 
 * open the MacOS system preferences
 * go to Security -> Privacy
-* scroll down to Accessbility and unlock it
+* scroll down to Accessibility and unlock it
 * add the app that is using `device_query` (such as your terminal) to the list
