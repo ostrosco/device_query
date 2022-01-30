@@ -1,3 +1,5 @@
+extern crate macos_accessibility_client;
+
 use keymap::Keycode;
 use mouse_state::MouseState;
 
@@ -104,6 +106,9 @@ const MAPPING: &[(readkey::Keycode, Keycode)] = &[
 
 impl DeviceState {
     pub fn new() -> DeviceState {
+        // TODO: remove this
+        assert!(has_accessibility(), "This app does not have Accessibility Permissions enabled and will not work");
+
         DeviceState {}
     }
 
@@ -116,11 +121,13 @@ impl DeviceState {
             readmouse::Mouse::Center.is_pressed(),
             false,
         ];
+
         MouseState {
             coords: (x as i32, y as i32),
             button_pressed,
         }
     }
+
     pub fn query_keymap(&self) -> Vec<Keycode> {
         MAPPING
             .iter()
@@ -128,4 +135,22 @@ impl DeviceState {
             .map(|(_, to)| *to)
             .collect()
     }
+}
+
+/// Returns true if the Accessibility permissions necessary for this library to work are granted
+/// to this process
+///
+/// If this returns false, the app can request them through the OS APIs, or the user can:
+///   1. open the MacOS system preferences
+///   2. go to Security -> Privacy
+///   3. scroll down to Accessibility and unlock it
+///   4. Add the app that is using device_query (such as your terminal) to the list
+///
+fn has_accessibility() -> bool {
+    use self::macos_accessibility_client::accessibility::*;
+    // Without prompting:
+    // application_is_trusted()
+
+    // With prompting:
+    application_is_trusted_with_prompt()
 }
