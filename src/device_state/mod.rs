@@ -14,3 +14,9 @@ pub use self::windows::DeviceState;
 mod macos;
 #[cfg(target_os = "macos")]
 pub use self::macos::DeviceState;
+
+impl Default for DeviceState {
+    fn default() -> Self {
+        Self::new()
+    }
+}
