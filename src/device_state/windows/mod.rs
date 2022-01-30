@@ -2,6 +2,7 @@ extern crate winapi;
 
 use keymap::Keycode;
 use mouse_state::MouseState;
+
 use self::winapi::shared::windef::POINT;
 use self::winapi::um::winuser;
 use self::winapi::um::winuser::{GetAsyncKeyState, GetCursorPos};

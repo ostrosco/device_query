@@ -125,7 +125,7 @@ impl DeviceState {
         MAPPING
             .iter()
             .filter(|(from, _)| from.is_pressed())
-            .map(|(_, to)| to.clone())
+            .map(|(_, to)| *to)
             .collect()
     }
 }
