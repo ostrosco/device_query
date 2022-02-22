@@ -3,6 +3,7 @@ extern crate macos_accessibility_client;
 use keymap::Keycode;
 use mouse_state::MouseState;
 
+#[derive(Debug, Clone)]
 pub struct DeviceState;
 
 const MAPPING: &[(readkey::Keycode, Keycode)] = &[
