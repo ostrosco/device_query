@@ -7,6 +7,7 @@ use self::winapi::shared::windef::POINT;
 use self::winapi::um::winuser;
 use self::winapi::um::winuser::{GetAsyncKeyState, GetCursorPos};
 
+#[derive(Debug, Clone)]
 pub struct DeviceState;
 
 impl DeviceState {
