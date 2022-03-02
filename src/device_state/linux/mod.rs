@@ -7,17 +7,22 @@ use mouse_state::MouseState;
 use std::os::raw::c_char;
 use std::ptr;
 use std::slice;
+use std::sync::Arc;
 
 #[derive(Debug, Clone)]
 /// Device state descriptor.
 pub struct DeviceState {
-    display: *mut xlib::Display,
+    // NOTE: do not make this field public. if others have a clone of this pointer, we won't close the
+    // X11 connection in the drop impl and thus will leak if user doesn't explicitly call close on it.
+    display: Arc<*mut xlib::Display>,
 }
 
 impl Drop for DeviceState {
     fn drop(&mut self) {
-        unsafe {
-            xlib::XCloseDisplay(self.display);
+        if Arc::strong_count(&self.display) == 1 {
+            unsafe {
+                xlib::XCloseDisplay(*self.display);
+            }
         }
     }
 }
@@ -30,7 +35,9 @@ impl DeviceState {
             if display.as_ref().is_none() {
                 panic!("Could not connect to a X display");
             }
-            DeviceState { display }
+            DeviceState {
+                display: Arc::new(display),
+            }
         }
     }
 
@@ -45,9 +52,9 @@ impl DeviceState {
         let mut child_return = 0;
         let mut mask_return = 0;
         unsafe {
-            root = xlib::XDefaultRootWindow(self.display);
+            root = xlib::XDefaultRootWindow(*self.display);
             xlib::XQueryPointer(
-                self.display,
+                *self.display,
                 root,
                 &mut root_return,
                 &mut child_return,
@@ -85,7 +92,7 @@ impl DeviceState {
         let mut keycodes = vec![];
         unsafe {
             let keymap: *mut c_char = [0; 32].as_mut_ptr();
-            xlib::XQueryKeymap(self.display, keymap);
+            xlib::XQueryKeymap(*self.display, keymap);
             for (ix, byte) in
                 slice::from_raw_parts(keymap, 32).iter().enumerate()
             {
