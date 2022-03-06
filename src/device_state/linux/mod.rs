@@ -12,17 +12,18 @@ use std::sync::Arc;
 #[derive(Debug, Clone)]
 /// Device state descriptor.
 pub struct DeviceState {
-    // NOTE: do not make this field public. if others have a clone of this pointer, we won't close the
-    // X11 connection in the drop impl and thus will leak if user doesn't explicitly call close on it.
-    display: Arc<*mut xlib::Display>,
+    xc: Arc<X11Connection>,
 }
 
-impl Drop for DeviceState {
+#[derive(Debug)]
+struct X11Connection {
+    display: *mut xlib::Display,
+}
+
+impl Drop for X11Connection {
     fn drop(&mut self) {
-        if Arc::strong_count(&self.display) == 1 {
-            unsafe {
-                xlib::XCloseDisplay(*self.display);
-            }
+        unsafe {
+            xlib::XCloseDisplay(self.display);
         }
     }
 }
@@ -36,7 +37,7 @@ impl DeviceState {
                 panic!("Could not connect to a X display");
             }
             DeviceState {
-                display: Arc::new(display),
+                xc: Arc::new(X11Connection { display }),
             }
         }
     }
@@ -52,9 +53,9 @@ impl DeviceState {
         let mut child_return = 0;
         let mut mask_return = 0;
         unsafe {
-            root = xlib::XDefaultRootWindow(*self.display);
+            root = xlib::XDefaultRootWindow(self.xc.display);
             xlib::XQueryPointer(
-                *self.display,
+                self.xc.display,
                 root,
                 &mut root_return,
                 &mut child_return,
@@ -92,7 +93,7 @@ impl DeviceState {
         let mut keycodes = vec![];
         unsafe {
             let keymap: *mut c_char = [0; 32].as_mut_ptr();
-            xlib::XQueryKeymap(*self.display, keymap);
+            xlib::XQueryKeymap(self.xc.display, keymap);
             for (ix, byte) in
                 slice::from_raw_parts(keymap, 32).iter().enumerate()
             {
