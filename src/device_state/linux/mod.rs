@@ -1,4 +1,3 @@
-extern crate input_event_codes as kernel_key;
 extern crate x11;
 
 use self::x11::xlib;
@@ -8,6 +7,8 @@ use std::os::raw::c_char;
 use std::ptr;
 use std::slice;
 use std::sync::Arc;
+
+mod kernel_key;
 
 #[derive(Debug, Clone)]
 /// Device state descriptor.
@@ -103,8 +104,7 @@ impl DeviceState {
                         //x11 keycode uses kernel keycode with an offset of 8.
                         let x11_key = ix as u8 * 8 + bit;
                         let kernel_key = x11_key - 8;
-                        if let Some(k) = self.kernel_key_to_keycode(kernel_key)
-                        {
+                        if let Some(k) = self.kernel_key_to_keycode(kernel_key) {
                             keycodes.push(k)
                         }
                     }
