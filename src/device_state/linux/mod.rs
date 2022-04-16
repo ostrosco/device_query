@@ -104,7 +104,8 @@ impl DeviceState {
                         //x11 keycode uses kernel keycode with an offset of 8.
                         let x11_key = ix as u8 * 8 + bit;
                         let kernel_key = x11_key - 8;
-                        if let Some(k) = self.kernel_key_to_keycode(kernel_key) {
+                        if let Some(k) = self.kernel_key_to_keycode(kernel_key)
+                        {
                             keycodes.push(k)
                         }
                     }
