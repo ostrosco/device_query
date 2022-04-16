@@ -1,5 +1,6 @@
 /// A non-exhaustive list of keycodes from Linux. Only the ones that this library currently supports
 /// is currently listed in this file; other keycodes will need to be added later as needed.
+/// Reference: https://github.com/torvalds/linux/blob/master/include/uapi/linux/input-event-codes.h
 
 pub const KEY_ESC: u16 = 1;
 pub const KEY_1: u16 = 2;
