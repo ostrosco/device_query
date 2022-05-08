@@ -4,7 +4,7 @@ use std::fmt;
 use std::str::FromStr;
 
 /// A list of supported keys that we can query from the OS. Outside of mod.
-#[derive(Debug, PartialEq, Clone, Copy)]
+#[derive(Debug, Eq, PartialEq, Hash, Clone, Copy)]
 #[allow(missing_docs)]
 pub enum Keycode {
     Key0,
