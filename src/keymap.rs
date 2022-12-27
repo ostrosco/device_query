@@ -115,6 +115,7 @@ impl FromStr for Keycode {
     type Err = String;
     fn from_str(s: &str) -> Result<Self, Self::Err> {
         match s {
+            "Key0" => Ok(Self::Key0),
             "Key1" => Ok(Self::Key1),
             "Key2" => Ok(Self::Key2),
             "Key3" => Ok(Self::Key3),
@@ -185,6 +186,20 @@ impl FromStr for Keycode {
             "PageDown" => Ok(Self::PageDown),
             "Insert" => Ok(Self::Insert),
             "Delete" => Ok(Self::Delete),
+            "Numpad0" => Ok(Self::Numpad0),
+            "Numpad1" => Ok(Self::Numpad1),
+            "Numpad2" => Ok(Self::Numpad2),
+            "Numpad3" => Ok(Self::Numpad3),
+            "Numpad4" => Ok(Self::Numpad4),
+            "Numpad5" => Ok(Self::Numpad5),
+            "Numpad6" => Ok(Self::Numpad6),
+            "Numpad7" => Ok(Self::Numpad7),
+            "Numpad8" => Ok(Self::Numpad8),
+            "Numpad9" => Ok(Self::Numpad9),
+            "NumpadSubtract" => Ok(Self::NumpadSubtract),
+            "NumpadAdd" => Ok(Self::NumpadAdd),
+            "NumpadDivide" => Ok(Self::NumpadDivide),
+            "NumpadMultiply" => Ok(Self::NumpadMultiply),
             "Grave" => Ok(Self::Grave),
             "Minus" => Ok(Self::Minus),
             "Equal" => Ok(Self::Equal),
