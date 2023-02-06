@@ -1,6 +1,6 @@
 //! List of keycodes.
 
-use std::fmt;
+use std::fmt::{self, write};
 use std::str::FromStr;
 
 /// A list of supported keys that we can query from the OS. Outside of mod.
@@ -218,6 +218,57 @@ impl FromStr for Keycode {
 
 impl fmt::Display for Keycode {
     fn fmt(&self, f: &mut fmt::Formatter<'_>) -> fmt::Result {
-        write!(f, "{:?}", self)
+        match self {
+            Keycode::Key0 | Keycode::Numpad0 => write!(f, "0"),
+            Keycode::Key1 | Keycode::Numpad1 => write!(f, "1"),
+            Keycode::Key2 | Keycode::Numpad2 => write!(f, "2"),
+            Keycode::Key3 | Keycode::Numpad3 => write!(f, "3"),
+            Keycode::Key4 | Keycode::Numpad4 => write!(f, "4"),
+            Keycode::Key5 | Keycode::Numpad5 => write!(f, "5"),
+            Keycode::Key6 | Keycode::Numpad6 => write!(f, "6"),
+            Keycode::Key7 | Keycode::Numpad7 => write!(f, "7"),
+            Keycode::Key8 | Keycode::Numpad8 => write!(f, "8"),
+            Keycode::Key9 | Keycode::Numpad9 => write!(f, "9"),
+            Keycode::A => write!(f, "A"),
+            Keycode::B => write!(f, "B"),
+            Keycode::C => write!(f, "C"),
+            Keycode::D => write!(f, "D"),
+            Keycode::E => write!(f, "E"),
+            Keycode::F => write!(f, "F"),
+            Keycode::G => write!(f, "G"),
+            Keycode::H => write!(f, "H"),
+            Keycode::I => write!(f, "I"),
+            Keycode::J => write!(f, "J"),
+            Keycode::K => write!(f, "K"),
+            Keycode::L => write!(f, "L"),
+            Keycode::M => write!(f, "M"),
+            Keycode::N => write!(f, "N"),
+            Keycode::O => write!(f, "O"),
+            Keycode::P => write!(f, "P"),
+            Keycode::Q => write!(f, "Q"),
+            Keycode::R => write!(f, "R"),
+            Keycode::S => write!(f, "S"),
+            Keycode::T => write!(f, "T"),
+            Keycode::U => write!(f, "U"),
+            Keycode::V => write!(f, "V"),
+            Keycode::W => write!(f, "W"),
+            Keycode::X => write!(f, "X"),
+            Keycode::Y => write!(f, "Y"),
+            Keycode::Z => write!(f, "Z"),
+            Keycode::F1 => write!(f, "F1"),
+            Keycode::F2 => write!(f, "F2"),
+            Keycode::F3 => write!(f, "F3"),
+            Keycode::F4 => write!(f, "F4"),
+            Keycode::F5 => write!(f, "F5"),
+            Keycode::F6 => write!(f, "F6"),
+            Keycode::F7 => write!(f, "F7"),
+            Keycode::F8 => write!(f, "F8"),
+            Keycode::F9 => write!(f, "F9"),
+            Keycode::F10 => write!(f, "F10"),
+            Keycode::F11 => write!(f, "F11"),
+            Keycode::F12 => write!(f, "F12"),
+            Keycode::Escape => write!(f, "⏎"),
+            _ => write!(f, " "),
+        }
     }
 }
