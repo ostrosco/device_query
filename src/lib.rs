@@ -40,6 +40,7 @@
 
 #[macro_use]
 extern crate lazy_static;
+extern crate windows;
 
 pub mod device_events;
 pub mod device_query;
