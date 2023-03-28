@@ -113,6 +113,15 @@ impl DeviceState {
         DeviceState {}
     }
 
+    /// returns `None` if app doesn't accessibility permissions.
+    pub fn checked_new() -> Option<DeviceState> {
+        if has_accessibility() {
+            Some(DeviceState {})
+        } else {
+            None
+        }
+    }
+
     pub fn query_pointer(&self) -> MouseState {
         let (x, y) = readmouse::Mouse::location();
         let button_pressed = vec![
