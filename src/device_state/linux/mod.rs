@@ -95,17 +95,14 @@ impl DeviceState {
         unsafe {
             let keymap: *mut c_char = [0; 32].as_mut_ptr();
             xlib::XQueryKeymap(self.xc.display, keymap);
-            for (ix, byte) in
-                slice::from_raw_parts(keymap, 32).iter().enumerate()
-            {
+            for (ix, byte) in slice::from_raw_parts(keymap, 32).iter().enumerate() {
                 for bit in 0_u8..8_u8 {
                     let bitmask = 1 << bit;
                     if byte & bitmask != 0 {
                         //x11 keycode uses kernel keycode with an offset of 8.
                         let x11_key = ix as u8 * 8 + bit;
                         let kernel_key = x11_key - 8;
-                        if let Some(k) = self.kernel_key_to_keycode(kernel_key)
-                        {
+                        if let Some(k) = self.kernel_key_to_keycode(kernel_key) {
                             keycodes.push(k)
                         }
                     }

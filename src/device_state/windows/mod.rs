@@ -2,9 +2,7 @@ use keymap::Keycode;
 use mouse_state::MouseState;
 use windows::Win32::Foundation::POINT;
 use windows::Win32::UI::Input::KeyboardAndMouse;
-use windows::Win32::UI::Input::KeyboardAndMouse::{
-    GetAsyncKeyState, VIRTUAL_KEY,
-};
+use windows::Win32::UI::Input::KeyboardAndMouse::{GetAsyncKeyState, VIRTUAL_KEY};
 use windows::Win32::UI::WindowsAndMessaging::GetCursorPos;
 
 #[derive(Debug, Clone)]
@@ -30,25 +28,15 @@ impl DeviceState {
                 (0, 0)
             };
             button1pressed =
-                GetAsyncKeyState(KeyboardAndMouse::VK_LBUTTON.0 as i32) as u32
-                    & 0x8000
-                    != 0;
+                GetAsyncKeyState(KeyboardAndMouse::VK_LBUTTON.0 as i32) as u32 & 0x8000 != 0;
             button2pressed =
-                GetAsyncKeyState(KeyboardAndMouse::VK_RBUTTON.0 as i32) as u32
-                    & 0x8000
-                    != 0;
+                GetAsyncKeyState(KeyboardAndMouse::VK_RBUTTON.0 as i32) as u32 & 0x8000 != 0;
             button3pressed =
-                GetAsyncKeyState(KeyboardAndMouse::VK_MBUTTON.0 as i32) as u32
-                    & 0x8000
-                    != 0;
+                GetAsyncKeyState(KeyboardAndMouse::VK_MBUTTON.0 as i32) as u32 & 0x8000 != 0;
             button4pressed =
-                GetAsyncKeyState(KeyboardAndMouse::VK_XBUTTON1.0 as i32) as u32
-                    & 0x8000
-                    != 0;
+                GetAsyncKeyState(KeyboardAndMouse::VK_XBUTTON1.0 as i32) as u32 & 0x8000 != 0;
             button5pressed =
-                GetAsyncKeyState(KeyboardAndMouse::VK_XBUTTON2.0 as i32) as u32
-                    & 0x8000
-                    != 0;
+                GetAsyncKeyState(KeyboardAndMouse::VK_XBUTTON2.0 as i32) as u32 & 0x8000 != 0;
         }
         MouseState {
             coords,

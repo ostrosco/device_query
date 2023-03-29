@@ -108,7 +108,10 @@ const MAPPING: &[(readkey::Keycode, Keycode)] = &[
 impl DeviceState {
     pub fn new() -> DeviceState {
         // TODO: remove this
-        assert!(has_accessibility(), "This app does not have Accessibility Permissions enabled and will not work");
+        assert!(
+            has_accessibility(),
+            "This app does not have Accessibility Permissions enabled and will not work"
+        );
 
         DeviceState {}
     }
