@@ -1,6 +1,8 @@
 extern crate device_query;
 
 use device_query::{DeviceEvents, DeviceState};
+use std::thread;
+use std::time::Duration;
 
 fn main() {
     let device_state = DeviceState::new();
@@ -11,5 +13,7 @@ fn main() {
         println!("Up: {:#?}", key);
     });
 
-    loop {}
+    loop {
+        thread::sleep(Duration::from_secs(1000));
+    }
 }
