@@ -27,11 +27,10 @@ fn main() {
         "x11", libdir
     ));
 
-    let config =
-        format!("pub mod config {{ pub mod libdir {{\n{}}}\n}}", config);
+    let config = format!("pub mod config {{ pub mod libdir {{\n{}}}\n}}", config);
     let out_dir = env::var("OUT_DIR").unwrap();
     let dest_path = Path::new(&out_dir).join("config.rs");
-    let mut f = File::create(&dest_path).unwrap();
+    let mut f = File::create(dest_path).unwrap();
     f.write_all(&config.into_bytes()).unwrap();
 
     let target = env::var("TARGET").unwrap();

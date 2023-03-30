@@ -1,6 +1,7 @@
 use super::{CallbackGuard, KeyboardCallbacks};
 use std::sync::{Arc, Mutex, Weak};
-use std::thread::{spawn, JoinHandle};
+use std::thread::{sleep, spawn, JoinHandle};
+use std::time::Duration;
 use MouseState;
 use {DeviceQuery, MouseCallbacks};
 use {DeviceState, Keycode};
@@ -30,6 +31,7 @@ fn keyboard_thread(callbacks: Weak<KeyboardCallbacks>) -> JoinHandle<()> {
                 }
             }
             prev_keys = keys;
+            sleep(Duration::from_micros(100));
         }
     })
 }
@@ -56,6 +58,7 @@ fn mouse_thread(callbacks: Weak<MouseCallbacks>) -> JoinHandle<()> {
                 callbacks.run_mouse_move(&mouse_state.coords);
             }
             previous_mouse_state = mouse_state;
+            sleep(Duration::from_micros(100));
         }
     })
 }
@@ -64,8 +67,7 @@ impl Default for EventLoop {
     fn default() -> Self {
         let keyboard_callbacks = Arc::new(KeyboardCallbacks::default());
         let mouse_callbacks = Arc::new(MouseCallbacks::default());
-        let _keyboard_thread =
-            keyboard_thread(Arc::downgrade(&keyboard_callbacks));
+        let _keyboard_thread = keyboard_thread(Arc::downgrade(&keyboard_callbacks));
         let _mouse_thread = mouse_thread(Arc::downgrade(&mouse_callbacks));
         Self {
             keyboard_callbacks,
@@ -95,9 +97,7 @@ impl EventLoop {
         CallbackGuard { _callback }
     }
 
-    pub fn on_mouse_move<
-        Callback: Fn(&MousePosition) + Send + Sync + 'static,
-    >(
+    pub fn on_mouse_move<Callback: Fn(&MousePosition) + Send + Sync + 'static>(
         &mut self,
         callback: Callback,
     ) -> CallbackGuard<Callback> {
@@ -126,6 +126,5 @@ impl EventLoop {
 }
 
 lazy_static! {
-    pub(crate) static ref EVENT_LOOP: Arc<Mutex<EventLoop>> =
-        Default::default();
+    pub(crate) static ref EVENT_LOOP: Arc<Mutex<EventLoop>> = Default::default();
 }

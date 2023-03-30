@@ -44,10 +44,9 @@ impl MouseCallbacks {
 
     pub fn run_mouse_move(&self, position: &MousePosition) {
         if let Ok(mut callbacks) = self.mouse_move.lock() {
-            utils::DrainFilter::drain_filter(
-                callbacks.deref_mut(),
-                |callback| callback.upgrade().is_none(),
-            );
+            utils::DrainFilter::drain_filter(callbacks.deref_mut(), |callback| {
+                callback.upgrade().is_none()
+            });
             for callback in callbacks.iter() {
                 if let Some(callback) = callback.upgrade() {
                     callback(position);
@@ -58,10 +57,9 @@ impl MouseCallbacks {
 
     pub fn run_mouse_down(&self, button: &MouseButton) {
         if let Ok(mut callbacks) = self.mouse_down.lock() {
-            utils::DrainFilter::drain_filter(
-                callbacks.deref_mut(),
-                |callback| callback.upgrade().is_none(),
-            );
+            utils::DrainFilter::drain_filter(callbacks.deref_mut(), |callback| {
+                callback.upgrade().is_none()
+            });
             for callback in callbacks.iter() {
                 if let Some(callback) = callback.upgrade() {
                     callback(button);
@@ -72,10 +70,9 @@ impl MouseCallbacks {
 
     pub fn run_mouse_up(&self, button: &MouseButton) {
         if let Ok(mut callbacks) = self.mouse_up.lock() {
-            utils::DrainFilter::drain_filter(
-                callbacks.deref_mut(),
-                |callback| callback.upgrade().is_none(),
-            );
+            utils::DrainFilter::drain_filter(callbacks.deref_mut(), |callback| {
+                callback.upgrade().is_none()
+            });
             for callback in callbacks.iter() {
                 if let Some(callback) = callback.upgrade() {
                     callback(button);
