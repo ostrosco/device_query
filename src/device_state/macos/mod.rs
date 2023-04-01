@@ -167,3 +167,23 @@ fn has_accessibility() -> bool {
     // With prompting:
     application_is_trusted_with_prompt()
 }
+
+
+//example use
+//keys!(device_state, {
+//    Keycode::Escape => {return}, 
+//    _ => {break}
+//});
+
+#[macro_export] macro_rules! use_keys {
+    ($state:tt, {$($key:pat => $code:block),*}) => {
+        let keys: Vec<Keycode> = $state.get_keys();
+        for key in keys.iter() {   
+            match key {
+                $($key => {$code}),*,
+            }
+        }
+
+    };
+}
+
