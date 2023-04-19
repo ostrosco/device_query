@@ -43,6 +43,20 @@ impl DeviceState {
         }
     }
 
+    /// Create a new DeviceState. In case of failure, doesn't panic.
+    pub fn default() -> Option<DeviceState> {
+        unsafe {
+            let display = xlib::XOpenDisplay(ptr::null());
+            if display.as_ref().is_none() {
+                eprintln!("Could not connect to a X display");
+                return None;
+            }
+            Some(DeviceState {
+                xc: Arc::new(X11Connection { display }),
+            })
+        }
+    }
+
     /// Query the `MouseState`.
     pub fn query_pointer(&self) -> MouseState {
         let root;
