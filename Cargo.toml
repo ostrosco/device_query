@@ -14,18 +14,18 @@ license = "MIT"
 travis-ci = { repository = "ostrosco/device_query" }
 
 [build-dependencies]
-pkg-config = "0.3.9"
+pkg-config = "0.3.26"
 
 [dependencies]
 lazy_static = "1.4.0"
 
 [target.'cfg(target_os = "linux")'.dependencies]
-x11 = {version = "2.17.2", features = ["xlib"] }
+x11 = {version = "2.21.0", features = ["xlib"] }
 
 [target.'cfg(target_os = "windows")'.dependencies]
-windows = {version = "0.46.0", features = ["Win32_UI_Input_KeyboardAndMouse", "Win32_UI_WindowsAndMessaging", "Win32_Foundation", "Win32_Foundation"]}
+windows = {version = "0.48.0", features = ["Win32_UI_Input_KeyboardAndMouse", "Win32_UI_WindowsAndMessaging", "Win32_Foundation", "Win32_Foundation"]}
 
 [target.'cfg(target_os = "macos")'.dependencies]
-readkey = "0.1.7"
-readmouse = "0.2.0"
+readkey = "0.2.1"
+readmouse = "0.2.1"
 macos-accessibility-client = "0.0.1"
