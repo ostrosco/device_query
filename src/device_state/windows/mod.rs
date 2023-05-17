@@ -9,8 +9,8 @@ use windows::Win32::UI::WindowsAndMessaging::GetCursorPos;
 pub struct DeviceState;
 
 impl DeviceState {
-    pub fn new() -> DeviceState {
-        DeviceState {}
+    pub fn new() -> Option<DeviceState> {
+        Some(DeviceState {})
     }
 
     pub fn query_pointer(&self) -> MouseState {
