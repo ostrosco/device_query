@@ -9,8 +9,13 @@ use windows::Win32::UI::WindowsAndMessaging::GetCursorPos;
 pub struct DeviceState;
 
 impl DeviceState {
-    pub fn new() -> DeviceState {
-        DeviceState {}
+    pub fn new() -> Self {
+        Self {}
+    }
+
+    // Adding because Linux and OSX supports this where `new` can panic. 
+    pub fn checked_new() -> Option<Self> {
+        Some(Self::new())
     }
 
     pub fn query_pointer(&self) -> MouseState {
