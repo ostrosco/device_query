@@ -44,7 +44,7 @@ impl DeviceState {
     }
 
     /// Create a new DeviceState. In case of failure, doesn't panic.
-    pub fn default() -> Option<DeviceState> {
+    pub fn checked_new() -> Option<DeviceState> {
         unsafe {
             let display = xlib::XOpenDisplay(ptr::null());
             if display.as_ref().is_none() {
