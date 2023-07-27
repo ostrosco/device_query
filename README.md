@@ -1,3 +1,8 @@
+# This is a fork of the original device_query
+It adds the distinction between LMeta and RMeta keys for Linux and Win
+
+
+
 # device_query
 
 [![Build Status](https://travis-ci.org/ostrosco/device_query.svg?branch=master)](https://travis-ci.org/ostrosco/device_query)
