@@ -5,7 +5,6 @@ use mouse_state::MouseState;
 
 #[derive(Debug, Clone)]
 pub struct DeviceState;
-
 const MAPPING: &[(readkey::Keycode, Keycode)] = &[
     (readkey::Keycode::_0, Keycode::Key0),
     (readkey::Keycode::_1, Keycode::Key1),
@@ -75,8 +74,8 @@ const MAPPING: &[(readkey::Keycode, Keycode)] = &[
     (readkey::Keycode::RightControl, Keycode::RControl),
     (readkey::Keycode::Shift, Keycode::LShift),
     (readkey::Keycode::RightShift, Keycode::RShift),
-    (readkey::Keycode::Option, Keycode::LAlt),
-    (readkey::Keycode::RightOption, Keycode::RAlt),
+    (readkey::Keycode::Option, Keycode::LOption),
+    (readkey::Keycode::RightOption, Keycode::ROption),
     (readkey::Keycode::Command, Keycode::Command),
     (readkey::Keycode::Return, Keycode::Enter),
     (readkey::Keycode::Up, Keycode::Up),
