@@ -5,15 +5,15 @@ use keymap::Keycode;
 use mouse_state::MouseState;
 use std::os::raw::c_char;
 use std::ptr;
+use std::rc::Rc;
 use std::slice;
-use std::sync::Arc;
 
 mod kernel_key;
 
 #[derive(Debug, Clone)]
 /// Device state descriptor.
 pub struct DeviceState {
-    xc: Arc<X11Connection>,
+    xc: Rc<X11Connection>,
 }
 
 #[derive(Debug)]
@@ -31,14 +31,15 @@ impl Drop for X11Connection {
 
 impl DeviceState {
     /// Creates a new DeviceState.
-    pub fn new() -> Option<DeviceState> {
+    pub fn new() -> Option<Self> {
         unsafe {
             let display = xlib::XOpenDisplay(ptr::null());
             if display.as_ref().is_none() {
-                panic!("Could not connect to a X display");
+                eprintln!("Could not connect to a X display");
+                return None;
             }
             Some(DeviceState {
-                xc: Arc::new(X11Connection { display }),
+                xc: Rc::new(X11Connection { display }),
             })
         }
     }
@@ -185,8 +186,8 @@ impl DeviceState {
             kernel_key::KEY_RIGHTSHIFT => Some(Keycode::RShift),
             kernel_key::KEY_LEFTALT => Some(Keycode::LAlt),
             kernel_key::KEY_RIGHTALT => Some(Keycode::RAlt),
-            kernel_key::KEY_LEFTMETA => Some(Keycode::Meta),
-            kernel_key::KEY_RIGHTMETA => Some(Keycode::Meta),
+            kernel_key::KEY_LEFTMETA => Some(Keycode::LMeta),
+            kernel_key::KEY_RIGHTMETA => Some(Keycode::RMeta),
             kernel_key::KEY_ENTER => Some(Keycode::Enter),
             kernel_key::KEY_UP => Some(Keycode::Up),
             kernel_key::KEY_DOWN => Some(Keycode::Down),

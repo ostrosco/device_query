@@ -9,7 +9,7 @@ use windows::Win32::UI::WindowsAndMessaging::GetCursorPos;
 pub struct DeviceState;
 
 impl DeviceState {
-    pub fn new() -> Option<DeviceState> {
+    pub fn new() -> Option<Self> {
         Some(DeviceState {})
     }
 
@@ -104,8 +104,8 @@ impl DeviceState {
             KeyboardAndMouse::VK_RSHIFT => Some(Keycode::RShift),
             KeyboardAndMouse::VK_LMENU => Some(Keycode::LAlt),
             KeyboardAndMouse::VK_RMENU => Some(Keycode::RAlt),
-            KeyboardAndMouse::VK_LWIN => Some(Keycode::Meta),
-            KeyboardAndMouse::VK_RWIN => Some(Keycode::Meta),
+            KeyboardAndMouse::VK_LWIN => Some(Keycode::LMeta),
+            KeyboardAndMouse::VK_RWIN => Some(Keycode::RMeta),
             KeyboardAndMouse::VK_RETURN => Some(Keycode::Enter),
             KeyboardAndMouse::VK_ESCAPE => Some(Keycode::Escape),
             KeyboardAndMouse::VK_UP => Some(Keycode::Up),
