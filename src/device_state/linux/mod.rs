@@ -5,15 +5,15 @@ use keymap::Keycode;
 use mouse_state::MouseState;
 use std::os::raw::c_char;
 use std::ptr;
+use std::rc::Rc;
 use std::slice;
-use std::sync::Arc;
 
 mod kernel_key;
 
 #[derive(Debug, Clone)]
 /// Device state descriptor.
 pub struct DeviceState {
-    xc: Arc<X11Connection>,
+    xc: Rc<X11Connection>,
 }
 
 #[derive(Debug)]
@@ -38,7 +38,7 @@ impl DeviceState {
                 panic!("Could not connect to a X display");
             }
             DeviceState {
-                xc: Arc::new(X11Connection { display }),
+                xc: Rc::new(X11Connection { display }),
             }
         }
     }
@@ -52,7 +52,7 @@ impl DeviceState {
                 return None;
             }
             Some(DeviceState {
-                xc: Arc::new(X11Connection { display }),
+                xc: Rc::new(X11Connection { display }),
             })
         }
     }
