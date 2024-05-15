@@ -98,6 +98,7 @@ pub enum Keycode {
     NumpadAdd,
     NumpadDivide,
     NumpadMultiply,
+    NumpadEquals,
 
     // The following keys names represent the position of the key in a US keyboard,
     // not the sign value. In a different keyboards and OS, the position can vary.
@@ -207,6 +208,7 @@ impl FromStr for Keycode {
             "NumpadAdd" => Ok(Self::NumpadAdd),
             "NumpadDivide" => Ok(Self::NumpadDivide),
             "NumpadMultiply" => Ok(Self::NumpadMultiply),
+            "NumpadEquals" => Ok(Self::NumpadEquals),
             "Grave" => Ok(Self::Grave),
             "Minus" => Ok(Self::Minus),
             "Equal" => Ok(Self::Equal),

@@ -191,6 +191,7 @@ impl DeviceState {
             kernel_key::KEY_KPPLUS => Some(Keycode::NumpadAdd),
             kernel_key::KEY_KPSLASH => Some(Keycode::NumpadDivide),
             kernel_key::KEY_KPASTERISK => Some(Keycode::NumpadMultiply),
+            kernel_key::KEY_KPEQUAL => Some(Keycode::NumpadEquals),
             kernel_key::KEY_ESC => Some(Keycode::Escape),
             kernel_key::KEY_SPACE => Some(Keycode::Space),
             kernel_key::KEY_LEFTCTRL => Some(Keycode::LControl),
