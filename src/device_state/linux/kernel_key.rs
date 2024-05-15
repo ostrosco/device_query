@@ -82,6 +82,7 @@ pub const KEY_KP1: u16 = 79;
 pub const KEY_KP2: u16 = 80;
 pub const KEY_KP3: u16 = 81;
 pub const KEY_KP0: u16 = 82;
+pub const KEY_KPDOT: u16 = 83;
 pub const KEY_F11: u16 = 87;
 pub const KEY_F12: u16 = 88;
 pub const KEY_KPENTER: u16 = 96;
