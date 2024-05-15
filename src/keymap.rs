@@ -108,6 +108,7 @@ pub enum Keycode {
     NumpadMultiply,
     NumpadEquals,
     NumpadEnter,
+    NumpadDecimal,
 
     // The following keys names represent the position of the key in a US keyboard,
     // not the sign value. In a different keyboards and OS, the position can vary.
@@ -227,6 +228,7 @@ impl FromStr for Keycode {
             "NumpadMultiply" => Ok(Self::NumpadMultiply),
             "NumpadEquals" => Ok(Self::NumpadEquals),
             "NumpadEnter" => Ok(Self::NumpadEnter),
+            "NumpadDecimal" => Ok(Self::NumpadDecimal),
             "Grave" => Ok(Self::Grave),
             "Minus" => Ok(Self::Minus),
             "Equal" => Ok(Self::Equal),
