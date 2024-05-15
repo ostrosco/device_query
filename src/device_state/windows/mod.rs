@@ -110,6 +110,7 @@ impl DeviceState {
             KeyboardAndMouse::VK_SUBTRACT => Some(Keycode::NumpadSubtract),
             KeyboardAndMouse::VK_DIVIDE => Some(Keycode::NumpadDivide),
             KeyboardAndMouse::VK_MULTIPLY => Some(Keycode::NumpadMultiply),
+            KeyboardAndMouse::VK_OEM_NEC_EQUAL => Some(Keycode::NumpadEquals),
             KeyboardAndMouse::VK_SPACE => Some(Keycode::Space),
             KeyboardAndMouse::VK_LCONTROL => Some(Keycode::LControl),
             KeyboardAndMouse::VK_RCONTROL => Some(Keycode::RControl),
