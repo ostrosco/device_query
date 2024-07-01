@@ -31,20 +31,7 @@ impl Drop for X11Connection {
 
 impl DeviceState {
     /// Creates a new DeviceState.
-    pub fn new() -> DeviceState {
-        unsafe {
-            let display = xlib::XOpenDisplay(ptr::null());
-            if display.as_ref().is_none() {
-                panic!("Could not connect to a X display");
-            }
-            DeviceState {
-                xc: Rc::new(X11Connection { display }),
-            }
-        }
-    }
-
-    /// Create a new DeviceState. In case of failure, doesn't panic.
-    pub fn checked_new() -> Option<DeviceState> {
+    pub fn new() -> Option<Self> {
         unsafe {
             let display = xlib::XOpenDisplay(ptr::null());
             if display.as_ref().is_none() {
