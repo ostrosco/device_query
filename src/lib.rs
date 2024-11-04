@@ -15,26 +15,17 @@
 //!
 //! It's also possible to listen for events.
 //! ```no_run
-//!  use device_query::{DeviceEvents, DeviceState};
+//!  use device_query::{DeviceEvents, DeviceEventsHandler};
 //!
-//!  let device_state = DeviceState::new();
+//!  let device_state = DeviceEventsHandler::new();
 //!
+//!  // Register a key down event callback
+//!  // The guard is used to keep the callback alive
 //!  let _guard = device_state.on_mouse_move(|position| {
 //!     println!("Mouse position: {:#?}", position);
 //!  });
-//!  let _guard = device_state.on_mouse_down(|button| {
-//!     println!("Mouse button down: {:#?}", button);
-//!  });
-//!  let _guard = device_state.on_mouse_up(|button| {
-//!     println!("Mouse button up: {:#?}", button);
-//!  });
-//!  let _guard = device_state.on_key_down(|key| {
-//!     println!("Keyboard key down: {:#?}", key);
-//!  });
-//!  let _guard = device_state.on_key_up(|key| {
-//!     println!("Keyboard key up: {:#?}", key);
-//!  });
 //!
+//!  // Keep the main thread alive
 //!  loop {}
 //! ```
 

@@ -1,4 +1,27 @@
 //! Devices events listeners.
+//! 
+//! This module contains the implementation of the DeviceEventsHandler struct.
+//! This allows to register callbacks for device events.
+//! for the current state of the device, see the [`DeviceState`](crate::device_state::DeviceState) struct.
+//! 
+//! # Example
+//! 
+//! ```no_run
+//! use device_query::{DeviceEvents, DeviceEventsHandler, Keycode, MouseButton};
+//! 
+//! fn main() {
+//!   let device_events = DeviceEventsHandler::new().unwrap();
+//!   // Register a key down event callback
+//!   // The guard is used to keep the callback alive
+//!   let _guard = device_events.on_key_down(|key| {
+//!     println!("Key down: {:?}", key);
+//!   });
+//!   // Keep the main thread alive
+//!   loop {}
+//! }
+//! 
+//! ```
+//! 
 
 mod callback;
 mod event_loop;
