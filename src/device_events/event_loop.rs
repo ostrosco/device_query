@@ -129,7 +129,7 @@ impl EventLoop {
     }
 }
 
-pub static EVENT_LOOP: LazyLock<Mutex<Option<EventLoop>>> = LazyLock::new(|| Default::default());
+pub(crate) static EVENT_LOOP: LazyLock<Mutex<Option<EventLoop>>> = LazyLock::new(|| Default::default());
 
 pub(crate) fn init_event_loop(sleep_dur: Duration) -> bool {
     let Ok(mut lock) = EVENT_LOOP.lock() else {
