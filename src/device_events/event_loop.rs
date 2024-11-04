@@ -1,5 +1,5 @@
 use super::{CallbackGuard, KeyboardCallbacks};
-use std::sync::{Arc, Mutex, Weak};
+use std::sync::{Arc, LazyLock, Mutex, Weak};
 use std::thread::{sleep, spawn, JoinHandle};
 use std::time::Duration;
 use MouseState;
@@ -129,16 +129,15 @@ impl EventLoop {
     }
 }
 
-lazy_static! {
-    pub(crate) static ref EVENT_LOOP: Arc<Mutex<Option<EventLoop>>> = Default::default();
-}
+pub static EVENT_LOOP: LazyLock<Mutex<Option<EventLoop>>> = LazyLock::new(|| Default::default());
 
-pub fn init_event_loop(sleep_dur: Duration) -> bool {
-    let mut event_loop = EVENT_LOOP.lock().unwrap();
-    if event_loop.is_none() {
-        *event_loop = Some(EventLoop::new(sleep_dur));
-        true
-    } else {
-        false
+pub(crate) fn init_event_loop(sleep_dur: Duration) -> bool {
+    let Ok(mut lock) = EVENT_LOOP.lock() else {
+        return false;
+    };
+    if lock.is_some() {
+        return false;
     }
+    *lock = Some(EventLoop::new(sleep_dur));
+    true
 }
