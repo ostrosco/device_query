@@ -1,6 +1,6 @@
 extern crate device_query;
 
-use device_query::{DeviceEvents, DeviceEventsHandler, DeviceState};
+use device_query::{DeviceEvents, DeviceEventsHandler};
 use std::thread;
 use std::time::Duration;
 
