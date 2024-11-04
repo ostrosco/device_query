@@ -1,18 +1,19 @@
 extern crate device_query;
 
-use device_query::{DeviceEvents, DeviceState};
+use device_query::{DeviceEvents, DeviceEventsHandler};
 use std::thread;
 use std::time::Duration;
 
 fn main() {
-    let device_state = DeviceState::new();
-    let _guard = device_state.on_mouse_move(|position| {
+    let event_handler = DeviceEventsHandler::new(std::time::Duration::from_millis(10))
+        .expect("Could not initialize event loop");
+    let _guard = event_handler.on_mouse_move(|position| {
         println!("Position: {:#?}", position);
     });
-    let _guard = device_state.on_mouse_down(|button| {
+    let _guard = event_handler.on_mouse_down(|button| {
         println!("Down: {:#?}", button);
     });
-    let _guard = device_state.on_mouse_up(|button| {
+    let _guard = event_handler.on_mouse_up(|button| {
         println!("Up: {:#?}", button);
     });
 
