@@ -14,7 +14,7 @@ pub(crate) struct EventLoop {
     _mouse_thread: JoinHandle<()>,
 }
 
-fn keyboard_thread(callbacks: Weak<KeyboardCallbacks>) -> JoinHandle<()> {
+fn keyboard_thread(callbacks: Weak<KeyboardCallbacks>, sleep_dur: Duration) -> JoinHandle<()> {
     spawn(move || {
         let device_state = DeviceState::new();
         let mut prev_keys = vec![];
@@ -31,12 +31,12 @@ fn keyboard_thread(callbacks: Weak<KeyboardCallbacks>) -> JoinHandle<()> {
                 }
             }
             prev_keys = keys;
-            sleep(Duration::from_micros(100));
+            sleep(sleep_dur);
         }
     })
 }
 
-fn mouse_thread(callbacks: Weak<MouseCallbacks>) -> JoinHandle<()> {
+fn mouse_thread(callbacks: Weak<MouseCallbacks>, sleep_dur: Duration) -> JoinHandle<()> {
     spawn(move || {
         let device_state = DeviceState::new();
         let mut previous_mouse_state = MouseState::default();
@@ -58,17 +58,23 @@ fn mouse_thread(callbacks: Weak<MouseCallbacks>) -> JoinHandle<()> {
                 callbacks.run_mouse_move(&mouse_state.coords);
             }
             previous_mouse_state = mouse_state;
-            sleep(Duration::from_micros(100));
+            sleep(sleep_dur);
         }
     })
 }
 
 impl Default for EventLoop {
     fn default() -> Self {
+        Self::new(Duration::from_micros(100))
+    }
+}
+
+impl EventLoop {
+    fn new(sleep_dur: Duration) -> Self {
         let keyboard_callbacks = Arc::new(KeyboardCallbacks::default());
         let mouse_callbacks = Arc::new(MouseCallbacks::default());
-        let _keyboard_thread = keyboard_thread(Arc::downgrade(&keyboard_callbacks));
-        let _mouse_thread = mouse_thread(Arc::downgrade(&mouse_callbacks));
+        let _keyboard_thread = keyboard_thread(Arc::downgrade(&keyboard_callbacks), sleep_dur);
+        let _mouse_thread = mouse_thread(Arc::downgrade(&mouse_callbacks), sleep_dur);
         Self {
             keyboard_callbacks,
             mouse_callbacks,
@@ -76,9 +82,7 @@ impl Default for EventLoop {
             _mouse_thread,
         }
     }
-}
 
-impl EventLoop {
     pub fn on_key_down<Callback: Fn(&Keycode) + Send + Sync + 'static>(
         &mut self,
         callback: Callback,
@@ -126,5 +130,15 @@ impl EventLoop {
 }
 
 lazy_static! {
-    pub(crate) static ref EVENT_LOOP: Arc<Mutex<EventLoop>> = Default::default();
+    pub(crate) static ref EVENT_LOOP: Arc<Mutex<Option<EventLoop>>> = Default::default();
+}
+
+pub fn init_event_loop(sleep_dur: Duration) -> bool {
+    let mut event_loop = EVENT_LOOP.lock().unwrap();
+    if event_loop.is_none() {
+        *event_loop = Some(EventLoop::new(sleep_dur));
+        true
+    } else {
+        false
+    }
 }
