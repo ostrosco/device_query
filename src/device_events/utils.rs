@@ -13,12 +13,12 @@ impl<T> DrainFilter<T> for Vec<T> {
         F: FnMut(&mut T) -> bool,
     {
         let mut filter = filter;
-        let mut i = 0;
-        while i < self.len() {
+        let mut i = self.len() - 1;
+        while i > 0 {
             if filter(&mut self[i]) {
                 self.remove(i);
             } else {
-                i += 1;
+                i -= 1;
             }
         }
     }
