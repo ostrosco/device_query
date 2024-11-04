@@ -8,9 +8,10 @@
 //! 
 //! ```no_run
 //! use device_query::{DeviceEvents, DeviceEventsHandler, Keycode, MouseButton};
+//! use std::time::Duration;
 //! 
 //! fn main() {
-//!   let device_events = DeviceEventsHandler::new().unwrap();
+//!   let device_events = DeviceEventsHandler::new(Duration::from_millis(10)).unwrap();
 //!   // Register a key down event callback
 //!   // The guard is used to keep the callback alive
 //!   let _guard = device_events.on_key_down(|key| {
