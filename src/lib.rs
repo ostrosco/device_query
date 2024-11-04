@@ -16,8 +16,10 @@
 //! It's also possible to listen for events.
 //! ```no_run
 //!  use device_query::{DeviceEvents, DeviceEventsHandler};
+//!  use std::time::Duration;
 //!
-//!  let device_state = DeviceEventsHandler::new();
+//!  let device_state = DeviceEventsHandler::new(Duration::from_millis(10))
+//!     .expect("Failed to start event loop");
 //!
 //!  // Register a key down event callback
 //!  // The guard is used to keep the callback alive
@@ -28,9 +30,6 @@
 //!  // Keep the main thread alive
 //!  loop {}
 //! ```
-
-#[macro_use]
-extern crate lazy_static;
 
 #[cfg(target_os = "windows")]
 extern crate windows;
