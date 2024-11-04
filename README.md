@@ -37,3 +37,35 @@ backspace, et cetera. This is due to a permission issue. To work around this:
 * go to Security -> Privacy
 * scroll down to Accessibility and unlock it
 * add the app that is using `device_query` (such as your terminal) to the list
+
+# Device Callbacks
+
+`device_query` allows you to register callbacks for various device events such as key presses and mouse movements.
+
+## Example
+
+Here's a simple example demonstrating how to use the callback system:
+
+```rust
+extern crate device_query;
+use device_query::{DeviceEvents, DeviceEventsHandler, Keycode, MouseButton, MousePosition};
+use std::thread;
+use std::time::Duration;
+
+fn main() {
+    // Initialize the event handler with a sleep duration of 10 milliseconds
+    let event_handler = DeviceEventsHandler::new(Duration::from_millis(10))
+        .expect("Could not initialize event loop");
+
+    // Register callbacks for various events
+    // The callbacks will be automatically deregistered when they go out of scope
+    let _mouse_move_guard = event_handler.on_mouse_move(|position: &MousePosition| {
+        println!("Mouse moved to position: {:?}", position);
+    });
+
+    // Keep the main thread alive to continue receiving events
+    loop {
+        thread::sleep(Duration::from_secs(1000));
+    }
+}
+```
