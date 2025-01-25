@@ -123,6 +123,9 @@ pub enum Keycode {
     Comma,
     Dot,
     Slash,
+
+    // for Korean IME
+    Hangul,
 }
 
 impl FromStr for Keycode {
@@ -240,6 +243,7 @@ impl FromStr for Keycode {
             "Comma" => Ok(Self::Comma),
             "Dot" => Ok(Self::Dot),
             "Slash" => Ok(Self::Slash),
+            "Hangul" => Ok(Self::Hangul),
             _ => Err(String::from("failed to parse keycode")),
         }
     }

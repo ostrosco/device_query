@@ -113,6 +113,7 @@ const MAPPING: &[(readkey::Keycode, Keycode)] = &[
     (readkey::Keycode::Comma, Keycode::Comma),
     (readkey::Keycode::Period, Keycode::Dot),
     (readkey::Keycode::Slash, Keycode::Slash),
+    (readkey::Keycode::Kana, Keycode::Hangul),
 ];
 
 impl DeviceState {

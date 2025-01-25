@@ -147,6 +147,7 @@ impl DeviceState {
             KeyboardAndMouse::VK_OEM_COMMA => Some(Keycode::Comma),
             KeyboardAndMouse::VK_OEM_PERIOD => Some(Keycode::Dot),
             KeyboardAndMouse::VK_OEM_2 => Some(Keycode::Slash),
+            KeyboardAndMouse::VK_HANGUL => Some(Keycode::Hangul),
 
             _ => None,
         };
