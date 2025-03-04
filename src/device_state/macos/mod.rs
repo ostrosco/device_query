@@ -88,6 +88,7 @@ const MAPPING: &[(readkey::Keycode, Keycode)] = &[
     (readkey::Keycode::Option, Keycode::LOption),
     (readkey::Keycode::RightOption, Keycode::ROption),
     (readkey::Keycode::Command, Keycode::Command),
+    (readkey::Keycode::RightCommand, Keycode::RCommand),
     (readkey::Keycode::Return, Keycode::Enter),
     (readkey::Keycode::Up, Keycode::Up),
     (readkey::Keycode::Down, Keycode::Down),

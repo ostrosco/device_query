@@ -71,7 +71,9 @@ pub enum Keycode {
     RShift,
     LAlt,
     RAlt,
+    // TODO rename `Command` into `RCommand` at new major release
     Command,
+    RCommand,
     LOption,
     ROption,
     LMeta,
@@ -193,7 +195,9 @@ impl FromStr for Keycode {
             "RShift" => Ok(Self::RShift),
             "LAlt" => Ok(Self::LAlt),
             "RAlt" => Ok(Self::RAlt),
+            // TODO rename `Command` into `RCommand` at new major release
             "Command" => Ok(Self::Command),
+            "RCommand" => Ok(Self::RCommand),
             "LOption" => Ok(Self::LOption),
             "ROption" => Ok(Self::ROption),
             "LMeta" => Ok(Self::LMeta),
