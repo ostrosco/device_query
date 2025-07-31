@@ -63,6 +63,7 @@ pub enum Keycode {
     F18,
     F19,
     F20,
+    ScrollLock,
     Escape,
     Space,
     LControl,
@@ -92,6 +93,8 @@ pub enum Keycode {
     PageDown,
     Insert,
     Delete,
+    SysRq,
+    Pause,
 
     // Numpad keys which have not been implemented: NumpadSeparator NumLock
     Numpad0,
@@ -187,6 +190,7 @@ impl FromStr for Keycode {
             "F18" => Ok(Self::F18),
             "F19" => Ok(Self::F19),
             "F20" => Ok(Self::F20),
+            "ScrollLock" => Ok(Self::ScrollLock),
             "Escape" => Ok(Self::Escape),
             "Space" => Ok(Self::Space),
             "LControl" => Ok(Self::LControl),
@@ -216,6 +220,8 @@ impl FromStr for Keycode {
             "PageDown" => Ok(Self::PageDown),
             "Insert" => Ok(Self::Insert),
             "Delete" => Ok(Self::Delete),
+            "SysRq" => Ok(Self::SysRq),
+            "Pause" => Ok(Self::Pause),
             "Numpad0" => Ok(Self::Numpad0),
             "Numpad1" => Ok(Self::Numpad1),
             "Numpad2" => Ok(Self::Numpad2),
