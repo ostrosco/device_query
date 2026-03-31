@@ -1,5 +1,7 @@
 # device_query
 
+# NOTE: This repository has been relocated to https://codeberg.org/ostrosco/device_query. Future work will continue there.
+
 [![Build Status](https://travis-ci.org/ostrosco/device_query.svg?branch=master)](https://travis-ci.org/ostrosco/device_query)
 
 A simple library to query mouse and keyboard inputs on demand without a window.
